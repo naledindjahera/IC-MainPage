@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About Us | Inspired Creations</title>
+
+<style>
+:root{
+  --main:#8E1913;
+  --hover:#D79F90;
+  --light:#f6f6f6;
+}
+
+/* RESET */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI", sans-serif;
+}
+
+body{
+  background:#f2f2f2;
+}
+
+/* NAVBAR */
+nav{
+  background:#f6f6f6;
+  padding:18px;
+  border-bottom:1px solid #ddd;
+}
+
+nav ul{
+  list-style:none;
+  display:flex;
+  justify-content:center;
+  gap:25px;
+}
+
+nav a{
+  color:#8E1913;
+  text-decoration:none;
+  padding:8px 14px;
+  border-radius:5px;
+  font-weight:500;
+  transition:0.3s;
+}
+
+nav a:hover{
+  background:#D79F90;
+  color:black;
+}
+
+nav a.active{
+  color:black;
+  text-decoration:underline;
+}
+
+/* PAGE TITLE */
+.page-title{
+  text-align:center;
+  padding:30px 20px 10px;
+  font-size:26px;
+  font-weight:600;
+}
+
+/* INTRO */
+.intro{
+  max-width:800px;
+  margin:30px auto;
+  padding:0 20px;
+  text-align:center;
+  line-height:1.6;
+}
+
+/* TEAM TITLE */
+.team-title{
+  text-align:center;
+  margin:50px 0 30px;
+  font-weight:600;
+  text-decoration:underline;
+  font-size: 22px;
+}
+
+/* MEMBER */
+.member{
+  max-width:800px;
+  margin:40px auto;
+  display:flex;
+  align-items:center;
+  gap:40px;
+  padding:0 20px;
+}
+
+.member:nth-child(even){
+  flex-direction:row;
+}
+
+.photo{
+  width:150px;
+  height:150px;
+  background:var(--main);
+  border-radius:12px;
+  transition:0.3s;
+}
+
+.photo:hover{
+  background:var(--hover);
+}
+
+.slideshow{
+  width:150px;
+  height:150px;
+  background:var(--main);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  border-radius:12px;
+}
+
+/* FOOTER */
+footer{
+  background:#f6f6f6;
+  color:#8E1913;
+  text-align:center;
+  padding:22px;
+  margin-top:80px;
+  font-size:14px;
+  border-top:1px solid #ddd;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<ul>
+<li><a href="homepage.html">Home</a></li>
+<li><a href="urpottery.html">UR Pottery</a></li>
+<li><a href="potterywine.html">Pottery & Wine</a></li>
+<li><a href="coupledn.html">Couples Date Night</a></li>
+<li><a href="potteryspeed.html">Speeddating</a></li>
+<li><a href="products.html">Products</a></li>
+<li><a href="about.html" class="active">About Us</a></li>
+<li><a href="contact.html">Contact Us</a></li>
+</ul>
+</nav>
+
+<!-- HEADING -->
+<div class="page-title">About Us</div>
+
+<!-- INTRO -->
+<div class="intro">
+<p>
+In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. 
+Nullam dictum felis eu pede mollis pretium. Integer tincidunt. 
+Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.
+</p>
+</div>
+
+<!-- TEAM -->
+<div class="team-title">The Team</div>
+
+<!-- MEMBER 1 -->
+<div class="member">
+  <div class="photo"></div>
+  <div>
+    <h3>Wilfried</h3>
+    <p>
+    Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
+    </p>
+  </div>
+</div>
+
+<!-- MEMBER 2 -->
+<div class="member">
+  <div class="slideshow">This is a slide show</div>
+  <div>
+    <h3>Painting Craft Centre work</h3>
+    <p>
+    Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
+    </p>
+  </div>
+</div>
+
+<!-- MEMBER 3 -->
+<div class="member">
+  <div class="photo"></div>
+  <div>
+    <h3>Sales Lady</h3>
+    <p>
+    Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
+    </p>
+  </div>
+</div>
+
+<footer>
+2026 Inspired Creations • Powered by Purple Web Codes
+</footer>
+
+</body>
+</html>

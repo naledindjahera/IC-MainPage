@@ -1,18 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inspired Creations - Homepage </title>
+<meta charset="UTF-8">
+    <title>Home | Inspired Creations</title>
+
+<style>
+:root{
+  --main:#8E1913;
+  --hover:#D79F90;
+  --dark:#1e1e1e;
+  --light:#f6f6f6;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body{
+  background:#f2f2f2;
+  color:#333;
+}
+
+/* NAV */
+nav{
+  background:#222;
+  padding:15px;
+}
+
+nav ul{
+  list-style:none;
+  display:flex;
+  gap:25px;
+  justify-content:center;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  padding:8px 14px;
+  border-radius:5px;
+}
+
+nav a:hover{
+  background:var(--hover);
+  color:black;
+}
+
+nav a.active{
+  color:black;
+  text-decoration:underline;
+}
+
+
+/* HERO */
+.hero{
+  background:white;
+  padding:60px 20px;
+  text-align:center;
+}
+
+.hero h1{
+  font-style:italic;
+  margin-bottom:40px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+  max-width:900px;
+  margin:0 auto;
+}
+
+.card{
+  background:var(--main);
+  height:180px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.card:hover{
+  background:var(--hover);
+  transform:scale(1.05);
+}
+
+/* BUTTON ROW */
+.quick-links{
+  margin-top:30px;
+  display:flex;
+  justify-content:center;
+  gap:15px;
+}
+
+.quick-links a{
+  background:var(--main);
+  color:white;
+  padding:10px 20px;
+  border-radius:20px;
+  text-decoration:none;
+}
+
+.quick-links a:hover{
+  background:var(--hover);
+  color:black;
+}
+
+/* CONTENT */
+.section{
+  background:white;
+  padding:40px;
+  margin:40px auto;
+  max-width:900px;
+}
+
+.section h2{
+  text-decoration:underline;
+  margin-bottom:15px;
+}
+
+/* FOOTER */
+footer{
+  background:#f6f6f6;
+  color:#8E1913;
+  text-align:center;
+  padding:22px;
+  margin-top:80px;
+  font-size:14px;
+  border-top:1px solid #ddd;
+}
+
+
+</style>
 </head>
+
 <body>
 
-    <h1 class="hp">Inspired Creations</h1>
-    <h2 class="hp">the home of</h2>
 
-    
 
-    
-    
+<section class="hero">
+<h1>Inspired Creations<br>the home of</h1>
+
+<div class="grid">
+  <div class="card" onclick="location.href='urpottery.html'"></div>
+  <div class="card" onclick="location.href='potterywine.html'"></div>
+  <div class="card" onclick="location.href='coupledn.html'"></div>
+  <div class="card" onclick="location.href='potteryspeed.html'"></div>
+</div>
+
+<div class="quick-links">
+<a href="products.html">Products</a>
+<a href="gallery.html">Gallery</a>
+<a href="contact.html">Contact Us</a>
+<a href="about.html">About Us</a>
+</div>
+</section>
+
+<section class="section">
+<h2>Our Story</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor.</p>
+</section>
+
+<section class="section">
+<h2>Meet The Founder</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</section>
+
+<footer>
+2026 Inspired Creations • Powered by Purple Web Codes
+</footer>
+
 </body>
 </html>

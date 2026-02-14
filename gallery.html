@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gallery | Inspired Creations</title>
+
+<style>
+:root{
+  --main:#8E1913;
+  --hover:#D79F90;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI", sans-serif;
+}
+
+body{
+  background:#f2f2f2;
+}
+/* NAVBAR */
+nav{
+  background:#f6f6f6;
+  padding:18px;
+  border-bottom:1px solid #ddd;
+}
+
+nav ul{
+  list-style:none;
+  display:flex;
+  justify-content:center;
+  gap:25px;
+}
+
+nav a{
+  color:#8E1913;
+  text-decoration:none;
+  padding:8px 14px;
+  border-radius:5px;
+  font-weight:500;
+}
+
+nav a:hover{
+  background:#D79F90;
+  color:#000;
+}
+
+
+nav a.active{
+  color:black;
+  text-decoration:underline;
+}
+
+
+
+/* TITLE */
+.title{
+  text-align:center;
+  padding:50px 20px 20px;
+  font-size:28px;
+}
+
+/* GALLERY ROW */
+.gallery-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:60px;
+  padding:60px 20px;
+  max-width:1000px;
+  margin:auto;
+}
+
+.gallery-item:nth-child(even){
+  flex-direction:row-reverse;
+}
+
+.image-box{
+  width:200px;
+  height:200px;
+  background:var(--main);
+  border-radius:12px;
+  transition:0.3s;
+}
+
+.image-box:hover{
+  background:var(--hover);
+  transform:scale(1.05);
+}
+
+.text-box{
+  max-width:400px;
+}
+
+/* FOOTER */
+footer{
+  background:#f6f6f6;
+  color:#8E1913;
+  text-align:center;
+  padding:22px;
+  margin-top:80px;
+  font-size:14px;
+  border-top:1px solid #ddd;
+}
+
+
+</style>
+</head>
+
+<body>
+ <nav>
+
+<ul>
+<li><a href="homepage.html">Home</a></li>
+<li><a href="urpottery.html">UR Pottery</a></li>
+<li><a href="potterywine.html">Pottery & Wine</a></li>
+<li><a href="coupledn.html">Couples Date Night</a></li>
+<li><a href="potteryspeed.html">Speeddating</a></li>
+<li><a href="products.html">Products</a></li>
+<li><a href="about.html">About Us</a></li>
+<li><a href="contact.html">Contact Us</a></li>
+
+</ul>
+</nav>
+
+<h2 class="title">Gallery</h2>
+
+<div class="gallery-item">
+  <div class="image-box"></div>
+  <div class="text-box">
+    <h3>Creative Moments</h3>
+    <p>Guests enjoying their artistic pottery sessions.</p>
+  </div>
+</div>
+
+<div class="gallery-item">
+  <div class="image-box"></div>
+  <div class="text-box">
+    <h3>Wine & Art Nights</h3>
+    <p>Elegant evenings filled with creativity and laughter.</p>
+  </div>
+</div>
+
+<div class="gallery-item">
+  <div class="image-box"></div>
+  <div class="text-box">
+    <h3>Finished Pieces</h3>
+    <p>Beautiful handcrafted pottery creations.</p>
+  </div>
+</div>
+
+<footer>
+2026 Inspired Creations • Powered by Purple Web Codes
+</footer>
+
+</body>
+</html>

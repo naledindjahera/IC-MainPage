@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Couples Date Night | Inspired Creations</title>
+
+<style>
+:root{
+  --main:#8E1913;
+  --hover:#D79F90;
+}
+
+/* RESET */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI", sans-serif;
+}
+
+body{
+  background:#f2f2f2;
+}
+
+/* NAVBAR */
+nav{
+  background:#f6f6f6;
+  padding:18px;
+  border-bottom:1px solid #ddd;
+}
+
+nav ul{
+  list-style:none;
+  display:flex;
+  justify-content:center;
+  gap:25px;
+}
+
+nav a{
+  color:#8E1913;
+  text-decoration:none;
+  padding:8px 14px;
+  border-radius:5px;
+  font-weight:500;
+  transition:0.3s;
+}
+
+nav a:hover{
+  color:black;
+  background:#D79F90;
+
+}
+
+nav a.active{
+  color:black;
+  text-decoration:underline;
+}
+
+/* PAGE TITLE */
+.page-title{
+  padding:30px 20px;
+  font-size:22px;
+  font-weight:600;
+  text-align:center;
+}
+
+/* TOP IMAGES */
+.top-images{
+  display:flex;
+  justify-content:center;
+  gap:40px;
+  padding:30px;
+}
+
+.image-box{
+  width:160px;
+  height:160px;
+  background:var(--main);
+  border-radius:10px;
+  transition:0.3s;
+}
+
+.image-box:hover{
+  background:var(--hover);
+  transform:scale(1.05);
+}
+
+/* INTRO */
+.intro{
+  text-align:center;
+  margin-top:10px;
+  font-style:italic;
+}
+
+/* CONTENT */
+.content{
+  max-width:900px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+/* STATUS HEADERS */
+.status-row{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  margin-bottom:15px;
+  font-weight:600;
+}
+
+.status-row div:nth-child(2){
+  text-align:center;
+}
+
+.status-row div:nth-child(3){
+  text-align:center;
+}
+
+/* EVENT ROW */
+.event{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:15px;
+  margin-bottom:20px;
+  align-items:center;
+}
+
+/* DATE CARD */
+.dates{
+  background: rgba(244,227,178,0.05);
+  padding:12px;
+  border-radius:18px;
+  border:4px solid var(--main);
+}
+
+/* SLOT */
+.slot{
+  width:35px;
+  height:35px;
+  border-radius:6px;
+  margin:auto;
+}
+
+/* SOLD */
+.slot.sold{
+  background:var(--main);
+}
+
+/* AVAILABLE */
+.slot.available{
+  background:white;
+  border:2px solid var(--main);
+}
+
+/* BUTTON */
+.book-btn{
+  background:var(--main);
+  color:white;
+  border:none;
+  padding:8px 14px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.book-btn:hover{
+  background:var(--hover);
+  color:black;
+}
+
+/* PRIVATE EVENTS */
+.private{
+  text-align:center;
+  margin:60px 0;
+}
+
+.private button{
+  background:var(--main);
+  color:white;
+  padding:12px 30px;
+  border:none;
+  border-radius:6px;
+  font-size:16px;
+}
+
+.private button:hover{
+  background:var(--hover);
+  color:black;
+}
+
+/* FOOTER */
+footer{
+  background:#f6f6f6;
+  color:#8E1913;
+  text-align:center;
+  padding:22px;
+  margin-top:80px;
+  font-size:14px;
+  border-top:1px solid #ddd;
+}
+</style>
+
+</head>
+
+<body>
+
+<nav>
+<ul>
+<li><a href="homepage.html">Home</a></li>
+<li><a href="urpottery.html">UR Pottery</a></li>
+<li><a href="potterywine.html" >Pottery & Wine</a></li>
+<li><a href="coupledn.html" class="active">Couples Date Night</a></li>
+<li><a href="potteryspeed.html">Speeddating</a></li>
+<li><a href="products.html">Products</a></li>
+<li><a href="about.html">About Us</a></li>
+<li><a href="contact.html">Contact Us</a></li>
+</ul>
+</nav>
+
+<div class="page-title">Couples Date Night</div>
+
+<!-- TOP -->
+<div class="top-images">
+  <div class="image-box"></div>
+  <div class="image-box"></div>
+</div>
+
+<p class="intro">"words words" by words</p>
+
+<div class="content">
+    <p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor.
+</p>
+<br>
+<p>
+In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
+</p>
+
+<br>
+<br>
+<h3>Scheduled Events</h3>
+
+<!-- STATUS HEADER -->
+<div class="status-row">
+  <div></div>
+  <div>Sold Out</div>
+  <div>Bookings Closed</div>
+  <div></div>
+</div>
+
+<!-- EVENT 1 -->
+<div class="event">
+  <div class="dates">
+    <h4>14 March 2026 <span>• N$450 per person</span></h4>
+    <p>Time: 18h00 • Venue: The Pottery Studio</p>
+  </div>
+  <div class="slot sold"></div>
+  <div class="slot sold"></div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+<!-- EVENT 2 -->
+<div class="event">
+  <div class="dates">
+    <h4>02 April 2026 <span>• N$450 per person</span></h4>
+    <p>Time: 18h00 • Venue: The Pottery Studio</p>
+  </div>
+  <div class="slot available"></div>
+  <div class="slot available"></div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+<!-- EVENT 3 -->
+<div class="event">
+  <div class="dates">
+    <h4>28 April 2026 <span>• N$450 per person</span></h4>
+    <p>Time: 18h00 • Venue: The Pottery Studio</p>
+  </div>
+  <div class="slot sold"></div>
+  <div class="slot sold"></div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+</div>
+
+<!-- PRIVATE -->
+<div class="private">
+<h3>Book a private event?</h3>
+<button>Book Now</button>
+</div>
+
+<footer>
+2026 Inspired Creations • Powered by Purple Web Codes
+</footer>
+
+</body>
+</html>
