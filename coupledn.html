@@ -186,6 +186,239 @@ nav a.active{
   color:black;
 }
 
+.admin-panel{
+  display:none;
+  position:fixed;
+  right:20px;
+  top:40%;
+  transform:translateY(-50%);
+  flex-direction:column;
+  gap:12px;
+  z-index:999;
+}
+
+.admin-btn{
+  background:#8E1913;
+  color:white;
+  border:none;
+  padding:12px 18px;
+  border-radius:10px;
+  font-size:14px;
+  cursor:pointer;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+.admin-btn:hover{
+  background:#D79F90;
+  color:black;
+}
+
+
+
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+}
+.modal-content{
+  background:white;
+  width:90%;
+  max-width:400px;
+  margin:60px auto;
+  padding:25px;
+  border-radius:10px;
+  max-height:80vh;       /* limits height */
+  overflow-y:auto;      /* enables scrolling */
+}
+
+
+.event-edit{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.modal input{
+  width:100%;
+  padding:8px;
+  margin-bottom:10px;
+}
+
+
+.admin-toggle{
+  text-align:center;
+  margin-top:15px;
+}
+
+.admin-toggle button{
+  background:#8E1913;
+  color:white;
+  border:none;
+  padding:6px 14px;
+  border-radius:6px;
+  font-size:13px;
+  cursor:pointer;
+  margin:0 5px;
+}
+
+.admin-toggle button:hover{
+  background:#D79F90;
+  color:black;
+}
+
+.admin-menu{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:9999;
+}
+
+/* dots */
+.admin-dots{
+  background:#8E1913;
+  color:white;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  cursor:pointer;
+  margin-bottom: -10px;
+}
+
+/* popup panel */
+#adminMenuPanel{
+  display:none;
+  position:absolute;
+  bottom:55px;
+  right:0;
+  background:white;
+  padding:10px;
+  border-radius:10px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.3);
+}
+
+#adminMenuPanel button{
+  background:#8E1913;
+  color:white;
+  border:none;
+  padding:8px 12px;
+  border-radius:6px;
+  margin:5px 0;
+  width:120px;
+  cursor:pointer;
+}
+
+#adminMenuPanel button:hover{
+  background:#D79F90;
+  color:black;
+}
+
+
+.image-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.image-box{
+  position:relative;
+}
+
+.image-box .delete-img{
+  position:absolute;
+  top:5px;
+  right:5px;
+  background:#8E1913;
+  color:white;
+  border:none;
+  border-radius:50%;
+  width:20px;
+  height:20px;
+  font-size:12px;
+  cursor:pointer;
+}
+
+#videoContainer video{
+  width:400px;
+  border-radius:10px;
+  margin:10px;
+}
+
+
+.media-grid{
+  max-width:450px;
+  margin:40px auto;
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:20px;
+}
+
+
+#storyParagraph{
+  line-height:1.7;
+  font-size:16px;
+  max-width:750px;
+  margin:30px auto;
+}
+
+
+/* Big left */
+.media-grid .big{
+  grid-row:1 / span 2;
+}
+
+/* All media boxes */
+.media-item{
+    position:relative;
+  width:100%;
+  height:100%;
+  background:#8E1913;
+  border-radius:14px;
+  overflow:hidden;
+}
+
+.media-item img,
+.media-item video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* DELETE MEDIA BUTTON */
+.delete-media{
+  position:absolute;
+  top:8px;
+  right:8px;
+  background:#8E1913;
+  color:white;
+  border:none;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.delete-media:hover{
+  background:#D79F90;
+  color:black;
+}
+
+
+
+
 /* FOOTER */
 footer{
   background:#f6f6f6;
@@ -196,8 +429,9 @@ footer{
   font-size:14px;
   border-top:1px solid #ddd;
 }
-</style>
 
+
+</style>
 </head>
 
 <body>
@@ -206,36 +440,55 @@ footer{
 <ul>
 <li><a href="homepage.html">Home</a></li>
 <li><a href="urpottery.html">UR Pottery</a></li>
-<li><a href="potterywine.html" >Pottery & Wine</a></li>
+<li><a href="potterywine.html">Pottery & Wine</a></li>
 <li><a href="coupledn.html" class="active">Couples Date Night</a></li>
 <li><a href="potteryspeed.html">Speeddating</a></li>
-<li><a href="products.html">Products</a></li>
+<li><a href="gallery.html">Gallery</a></li>
 <li><a href="about.html">About Us</a></li>
 <li><a href="contact.html">Contact Us</a></li>
 </ul>
 </nav>
 
+
+
 <div class="page-title">Couples Date Night</div>
 
 <!-- TOP -->
-<div class="top-images">
-  <div class="image-box"></div>
-  <div class="image-box"></div>
-</div>
+<div class="media-grid" id="mediaGrid"></div>
+
+
+
 
 <p class="intro">"words words" by words</p>
 
+<div class="admin-panel">
+
+  <button class="admin-btn" onclick="openEditEvents()">Edit Events</button>
+
+  <label class="admin-btn">
+    Add Image
+    <input id="imageFile" type="file" accept="image/*" hidden onchange="addImage()">
+  </label>
+
+  <label class="admin-btn">
+    Add Slide Show
+    <input id="videoFile" type="file" accept="video/*" hidden onchange="addVideo()">
+  </label>
+
+  <button class="admin-btn" onclick="openParagraphEditor()">Edit Paragraph</button>
+
+</div>
+
+
+
 <div class="content">
-    <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor.
-</p>
-<br>
-<p>
-In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-</p>
+  <p id="storyParagraph"></p>
+
 
 <br>
 <br>
+
+
 <h3>Scheduled Events</h3>
 
 <!-- STATUS HEADER -->
@@ -246,50 +499,88 @@ In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
   <div></div>
 </div>
 
-<!-- EVENT 1 -->
-<div class="event">
-  <div class="dates">
-    <h4>14 March 2026 <span>• N$450 per person</span></h4>
-    <p>Time: 18h00 • Venue: The Pottery Studio</p>
-  </div>
-  <div class="slot sold"></div>
-  <div class="slot sold"></div>
-  <button class="book-btn">Book Now</button>
-</div>
-
-<!-- EVENT 2 -->
-<div class="event">
-  <div class="dates">
-    <h4>02 April 2026 <span>• N$450 per person</span></h4>
-    <p>Time: 18h00 • Venue: The Pottery Studio</p>
-  </div>
-  <div class="slot available"></div>
-  <div class="slot available"></div>
-  <button class="book-btn">Book Now</button>
-</div>
-
-<!-- EVENT 3 -->
-<div class="event">
-  <div class="dates">
-    <h4>28 April 2026 <span>• N$450 per person</span></h4>
-    <p>Time: 18h00 • Venue: The Pottery Studio</p>
-  </div>
-  <div class="slot sold"></div>
-  <div class="slot sold"></div>
-  <button class="book-btn">Book Now</button>
-</div>
+<div id="eventsContainer"></div>
 
 </div>
 
 <!-- PRIVATE -->
-<div class="private">
-<h3>Book a private event?</h3>
-<button>Book Now</button>
+<div id="privateEventContainer"></div>
+
+
+<div id="editEventsModal" class="modal">
+
+  <div class="modal-content">
+
+    <h3>Edit Events:</h3>
+
+    
+
+<div id="adminEventsContainer"></div>
+
+<hr>
+
+<h4>Private Booking</h4>
+
+<input id="privateLink" type="text" placeholder="Private Form Link">
+
+<label>
+  <input type="checkbox" id="privateAvailable">
+  Private Booking Available
+</label>
+
+<button class="admin-btn" onclick="savePrivateBooking()">Save Private Settings</button>
+
+
+
+    <h4>Add New Event</h4>
+<input id="newDate" type="text" placeholder="Date">
+<input id="newTime" type="text" placeholder="Time">
+<input id="newVenue" type="text" placeholder="Venue">
+<input id="newPrice" type="text" placeholder="Price">
+<input id="newFormLink" type="text" placeholder="Form Link">
+
+
+<button class="admin-btn" onclick="addEvent()">Add Event</button>
+    <button class="admin-btn" onclick="closeEditEvents()">Close</button>
+
+  </div>
+
+</div>
+
+
+<!-- EDIT PARAGRAPH MODAL -->
+<div id="paragraphModal" class="modal">
+
+  <div class="modal-content">
+
+    <h3>Edit Paragraph</h3>
+
+    <textarea id="paragraphTextarea" rows="6"
+      placeholder="Type your paragraph here..."></textarea>
+
+    <button class="admin-btn" onclick="saveParagraphModal()">Save</button>
+    <button class="admin-btn" onclick="closeParagraphModal()">Close</button>
+
+  </div>
+
+</div>
+
+<!-- ADMIN MINI MENU -->
+<div class="admin-menu">
+
+  <div class="admin-dots" onclick="toggleAdminMenu()">⋯</div>
+
+  <div id="adminMenuPanel">
+    <button onclick="enableAdmin()">Enable Admin</button>
+    <button onclick="disableAdmin()">Disable Admin</button>
+  </div>
+
 </div>
 
 <footer>
 2026 Inspired Creations • Powered by Purple Web Codes
 </footer>
+<script src="coupledn.js"></script>
 
 </body>
 </html>

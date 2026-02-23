@@ -271,6 +271,55 @@ nav a.active{
   color:black;
 }
 
+.admin-menu{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:9999;
+}
+
+/* dots */
+.admin-dots{
+  background:#8E1913;
+  color:white;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  cursor:pointer;
+  margin-bottom: -10px;
+}
+
+/* popup panel */
+#adminMenuPanel{
+  display:none;
+  position:absolute;
+  bottom:55px;
+  right:0;
+  background:white;
+  padding:10px;
+  border-radius:10px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.3);
+}
+
+#adminMenuPanel button{
+  background:#8E1913;
+  color:white;
+  border:none;
+  padding:8px 12px;
+  border-radius:6px;
+  margin:5px 0;
+  width:120px;
+  cursor:pointer;
+}
+
+#adminMenuPanel button:hover{
+  background:#D79F90;
+  color:black;
+}
 
 
 .image-box img{
@@ -312,6 +361,15 @@ nav a.active{
   grid-template-columns:2fr 1fr;
   gap:20px;
 }
+
+
+#storyParagraph{
+  line-height:1.7;
+  font-size:16px;
+  max-width:750px;
+  margin:30px auto;
+}
+
 
 /* Big left */
 .media-grid .big{
@@ -358,6 +416,9 @@ nav a.active{
   color:black;
 }
 
+
+
+
 /* FOOTER */
 footer{
   background:#f6f6f6;
@@ -368,6 +429,8 @@ footer{
   font-size:14px;
   border-top:1px solid #ddd;
 }
+
+
 </style>
 </head>
 
@@ -380,7 +443,7 @@ footer{
 <li><a href="potterywine.html" class="active">Pottery & Wine</a></li>
 <li><a href="coupledn.html">Couples Date Night</a></li>
 <li><a href="potteryspeed.html">Speeddating</a></li>
-<li><a href="products.html">Products</a></li>
+<li><a href="gallery.html">Gallery</a></li>
 <li><a href="about.html">About Us</a></li>
 <li><a href="contact.html">Contact Us</a></li>
 </ul>
@@ -450,7 +513,23 @@ footer{
 
     <h3>Edit Events:</h3>
 
+    
+
 <div id="adminEventsContainer"></div>
+
+<hr>
+
+<h4>Private Booking</h4>
+
+<input id="privateLink" type="text" placeholder="Private Form Link">
+
+<label>
+  <input type="checkbox" id="privateAvailable">
+  Private Booking Available
+</label>
+
+<button class="admin-btn" onclick="savePrivateBooking()">Save Private Settings</button>
+
 
 
     <h4>Add New Event</h4>
@@ -458,6 +537,8 @@ footer{
 <input id="newTime" type="text" placeholder="Time">
 <input id="newVenue" type="text" placeholder="Venue">
 <input id="newPrice" type="text" placeholder="Price">
+<input id="newFormLink" type="text" placeholder="Form Link">
+
 
 <button class="admin-btn" onclick="addEvent()">Add Event</button>
     <button class="admin-btn" onclick="closeEditEvents()">Close</button>
@@ -466,17 +547,40 @@ footer{
 
 </div>
 
-<div class="admin-toggle">
-  <button onclick="enableAdmin()">Enable Admin</button>
-  <button onclick="disableAdmin()">Disable Admin</button>
+
+<!-- EDIT PARAGRAPH MODAL -->
+<div id="paragraphModal" class="modal">
+
+  <div class="modal-content">
+
+    <h3>Edit Paragraph</h3>
+
+    <textarea id="paragraphTextarea" rows="6"
+      placeholder="Type your paragraph here..."></textarea>
+
+    <button class="admin-btn" onclick="saveParagraphModal()">Save</button>
+    <button class="admin-btn" onclick="closeParagraphModal()">Close</button>
+
+  </div>
+
 </div>
 
+<!-- ADMIN MINI MENU -->
+<div class="admin-menu">
 
+  <div class="admin-dots" onclick="toggleAdminMenu()">⋯</div>
+
+  <div id="adminMenuPanel">
+    <button onclick="enableAdmin()">Enable Admin</button>
+    <button onclick="disableAdmin()">Disable Admin</button>
+  </div>
+
+</div>
 
 <footer>
 2026 Inspired Creations • Powered by Purple Web Codes
 </footer>
-<script src="forms.js"></script>
+<script src="potterynwine.js"></script>
 
 </body>
 </html>

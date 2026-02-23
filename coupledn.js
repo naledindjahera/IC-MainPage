@@ -27,9 +27,24 @@ function closeEditEvents(){
   document.getElementById("editEventsModal").style.display = "none";
 }
 
+const PRIVATE_KEY = "privateBooking";
+
+function getPrivate(){
+  const data = localStorage.getItem(PRIVATE_KEY);
+  return data ? JSON.parse(data) : {
+    link:"",
+    available:true
+  };
+}
+
+function savePrivate(obj){
+  localStorage.setItem(PRIVATE_KEY, JSON.stringify(obj));
+}
+
+
 
 // STORAGE KEY
-const STORAGE_KEY = "potteryWineEvents";
+const STORAGE_KEY = "couplesEvents";
 
 // DEFAULT EVENTS
 const defaultEvents = [
@@ -38,6 +53,7 @@ const defaultEvents = [
     time: "18h00",
     venue: "The Pottery Studio",
     price: "N$450",
+    formLink: "PASTE_FORM_LINK_HERE",
     soldOut: true,
     closed: true
   },
@@ -46,6 +62,7 @@ const defaultEvents = [
     time: "18h00",
     venue: "The Pottery Studio",
     price: "N$450",
+    formLink: "PASTE_FORM_LINK_HERE",
     soldOut: false,
     closed: false
   },
@@ -54,6 +71,7 @@ const defaultEvents = [
     time: "18h00",
     venue: "The Pottery Studio",
     price: "N$450",
+    formLink: "PASTE_FORM_LINK_HERE",
     soldOut: false,
     closed: false
   }
@@ -88,7 +106,10 @@ function renderEvents(){
 ${
   event.soldOut || event.closed
   ? `<button class="book-btn" disabled style="opacity:0.5">Unavailable</button>`
-  : `<button class="book-btn" onclick="openPotteryWineForm()">Book Now</button>`
+  : `<button class="book-btn" onclick="window.open('${event.formLink}','_blank')">
+  Book Now
+</button>
+`
 }      </div>
     `;
   });
@@ -106,16 +127,27 @@ renderEvents();
 
 function renderPrivateEvent(){
   const container = document.getElementById("privateEventContainer");
+  const data = getPrivate();
 
   container.innerHTML = `
     <div class="private">
+
       <h3>Want a Private Event?</h3>
-      <button class="book-btn" onclick="openPotteryWineForm()">
-        Book Now
-      </button>
+
+      ${
+        data.available
+        ? `<button class="book-btn" onclick="window.open('${data.link}','_blank')">
+            Book Private Event
+           </button>`
+        : `<button class="book-btn" disabled style="opacity:0.5">
+            Private Booking Unavailable
+           </button>`
+      }
+
     </div>
   `;
 }
+
 
 renderPrivateEvent();
 
@@ -179,8 +211,9 @@ function addEvent(){
   const time = document.getElementById("newTime").value;
   const venue = document.getElementById("newVenue").value;
   const price = document.getElementById("newPrice").value;
+  const formLink = document.getElementById("newFormLink").value;
 
-  if(!date || !time || !venue || !price){
+  if(!date || !time || !venue || !price || !formLink){
     alert("Please fill all fields");
     return;
   }
@@ -192,6 +225,7 @@ function addEvent(){
     time,
     venue,
     price,
+    formLink,
     soldOut:false,
     closed:false
   });
@@ -202,6 +236,7 @@ function addEvent(){
 
   alert("Event added!");
 }
+
 
 function deleteEvent(index){
   const events = getEvents();
@@ -234,7 +269,7 @@ function disableAdmin(){
 
 
 // PARAGRAPH STORAGE
-const PARAGRAPH_KEY = "potteryWineParagraph";
+const PARAGRAPH_KEY = "couplesParagraph";
 
 function loadParagraph(){
   const saved = localStorage.getItem(PARAGRAPH_KEY);
@@ -252,23 +287,36 @@ function saveParagraph(){
   alert("Paragraph updated!");
 }
 
-
 function openParagraphEditor(){
-  const text = localStorage.getItem("potteryWineParagraph") || "";
-  const newText = prompt("Edit paragraph:", text);
-
-  if(newText !== null){
-    localStorage.setItem("potteryWineParagraph", newText);
-    loadParagraph();
-  }
+  const text = localStorage.getItem(PARAGRAPH_KEY) || "";
+  document.getElementById("paragraphTextarea").value = text;
+  document.getElementById("paragraphModal").style.display = "block";
 }
+
+function closeParagraphModal(){
+  document.getElementById("paragraphModal").style.display = "none";
+}
+
+function saveParagraphModal(){
+  const text = document.getElementById("paragraphTextarea").value;
+
+  if(!text.trim()){
+    alert("Paragraph cannot be empty");
+    return;
+  }
+
+  localStorage.setItem(PARAGRAPH_KEY, text);
+  loadParagraph();
+  closeParagraphModal();
+}
+
 
 
 loadParagraph();
 
 
 
-const MEDIA_KEY = "potteryWineMedia";
+const MEDIA_KEY = "couplesMedia";
 
 function getMedia(){
   const data = localStorage.getItem(MEDIA_KEY);
@@ -353,3 +401,26 @@ function deleteMedia(index){
 window.onload = function(){
   renderMedia();
 };
+
+
+function savePrivateBooking(){
+  const link = document.getElementById("privateLink").value;
+  const available = document.getElementById("privateAvailable").checked;
+
+  savePrivate({
+    link,
+    available
+  });
+
+  renderPrivateEvent();
+  alert("Private booking updated!");
+}
+
+
+
+function toggleAdminMenu(){
+  const panel = document.getElementById("adminMenuPanel");
+  panel.style.display = panel.style.display === "block"
+    ? "none"
+    : "block";
+}

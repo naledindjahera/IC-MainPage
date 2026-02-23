@@ -42,11 +42,13 @@ nav a{
   padding:8px 14px;
   border-radius:5px;
   font-weight:500;
+  transition:0.3s;
 }
 
 nav a:hover{
-  background:#D79F90;
   color:black;
+  background:#D79F90;
+
 }
 
 nav a.active{
@@ -61,6 +63,7 @@ nav a.active{
   font-size:22px;
   font-weight:600;
   text-align: center;
+
 }
 
 /* TOP SECTION */
@@ -124,6 +127,8 @@ nav a.active{
   justify-content:center;
   gap:30px;
   margin:50px 0;
+  width:50px;
+  height:160px;
   flex-wrap:wrap;
 }
 
@@ -139,6 +144,167 @@ nav a.active{
   background:var(--hover);
   transform:scale(1.05);
 }
+
+.media-grid{
+  max-width:900px;
+  margin:40px auto;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:20px;
+}
+
+.media-item{
+  max-width:900px;
+  position:relative;
+  height:220px;
+  background:#8E1913;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.media-item img,
+.media-item video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+    max-width:900px;
+
+}
+
+.media-grid .big{
+  grid-row:1 / span 2;
+}
+
+.bottom-gallery{
+  max-width:900px;
+  margin:60px auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr ));
+  grid-template-columns:1fr 1fr 1fr;
+  gap:20px;
+}
+
+.delete-btn{
+  position:absolute;
+  top:8px;
+  right:8px;
+  background:#8E1913;
+  color:white;
+  border:none;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+/* ADMIN PANEL */
+.admin-panel{
+  display:none;
+  position:fixed;
+  right:20px;
+  top:50%;
+  transform:translateY(-50%);
+  display:none;
+  flex-direction:column;
+  gap:12px;
+  z-index:999;
+}
+
+.admin-btn{
+  background:#8E1913;
+  color:white;
+  border:none;
+  padding:12px 18px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:14px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+.admin-btn:hover{
+  background:#D79F90;
+  color:black;
+}
+
+/* ADMIN DOT MENU */
+.admin-menu{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:9999;
+}
+
+.admin-dots{
+  background:#8E1913;
+  color:white;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  cursor:pointer;
+}
+
+#adminMenuPanel{
+  display:none;
+  position:absolute;
+  bottom:55px;
+  right:0;
+  background:white;
+  padding:10px;
+  border-radius:10px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.3);
+}
+
+#adminMenuPanel button{
+  background:#8E1913;
+  color:white;
+  border:none;
+  padding:8px 12px;
+  border-radius:6px;
+  margin:5px 0;
+  width:140px;
+  cursor:pointer;
+}
+
+#adminMenuPanel button:hover{
+  background:#D79F90;
+  color:black;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  z-index:2000;
+}
+
+.modal-content{
+  background:white;
+  width:90%;
+  max-width:500px;
+  margin:100px auto;
+  padding:30px;
+  border-radius:14px;
+}
+
+.modal-content textarea{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:2px solid #8E1913;
+  resize:none;
+  margin-bottom:20px;
+}
+
+
 
 /* FOOTER */
 footer{
@@ -158,11 +324,11 @@ footer{
 <nav>
 <ul>
 <li><a href="homepage.html">Home</a></li>
-<li><a href="urpottery.html">UR Pottery</a></li>
+<li><a href="urpottery.html" class="active">UR Pottery</a></li>
 <li><a href="potterywine.html">Pottery & Wine</a></li>
 <li><a href="coupledn.html">Couples Date Night</a></li>
 <li><a href="potteryspeed.html">Speeddating</a></li>
-<li><a href="products.html">Products</a></li>
+<li><a href="gallery.html">Gallery</a></li>
 <li><a href="about.html">About Us</a></li>
 <li><a href="contact.html">Contact Us</a></li>
 
@@ -173,41 +339,61 @@ footer{
 
 
 <!-- TOP SECTION -->
-<div class="top-section">
-  <div class="box"></div>
-  <div class="box"></div>
-  <div class="slideshow">This is a slideshow</div>
-</div>
+<div class="media-grid" id="topMediaGrid"></div>
+
 
 <!-- STORY -->
 <div class="story">
   <h2>Our Story</h2>
-  <p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor.
-  </p>
-
-  <p>
-  In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-  </p>
-
-  <p>
-  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-  </p>
+  <p id="urStory"></p>
 </div>
 
-<!-- TWO GRID -->
-<div class="grid-two">
-  <div class="small-box"></div>
-  <div class="small-box"></div>
+<!-- BOTTOM GALLERY -->
+<div class="bottom-gallery" id="bottomGallery"></div>
+
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="urAdminPanel">
+
+  <label class="admin-btn">
+    Add Top Image
+    <input type="file" accept="image/*" hidden onchange="addTopImage(event)">
+  </label>
+
+  <label class="admin-btn">
+    Add Slideshow Video
+    <input type="file" accept="video/*" hidden onchange="addSlideshow(event)">
+  </label>
+
+  <label class="admin-btn">
+    Add Bottom Image
+    <input type="file" accept="image/*" hidden onchange="addBottomImage(event)">
+  </label>
+
+  <button class="admin-btn" onclick="openStoryEditor()">Edit Story</button>
+
 </div>
 
-<!-- THREE GRID -->
-<div class="grid-three">
-  <div class="small-box"></div>
-  <div class="small-box"></div>
-  <div class="small-box"></div>
+<!-- STORY MODAL -->
+<div id="storyModal" class="modal">
+  <div class="modal-content">
+    <h3>Edit Story</h3>
+    <textarea id="storyTextarea" rows="6"></textarea>
+    <button class="admin-btn" onclick="saveStory()">Save</button>
+    <button class="admin-btn" onclick="closeStoryEditor()">Close</button>
+  </div>
 </div>
 
+<!-- ADMIN DOTS -->
+<div class="admin-menu">
+  <div class="admin-dots" onclick="toggleAdminMenu()">⋯</div>
+  <div id="adminMenuPanel">
+    <button onclick="enableAdmin()">Enable Admin</button>
+    <button onclick="disableAdmin()">Disable Admin</button>
+  </div>
+</div>
+
+<script src="urpottery.js"></script>
 <footer>
 2026 Inspired Creations • Powered by Purple Web Codes
 </footer>

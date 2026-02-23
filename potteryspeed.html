@@ -100,6 +100,31 @@ nav a.active{
   transform:scale(1.05);
 }
 
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+}
+
+.modal-content{
+  background:white;
+  max-width:450px;
+  margin:120px auto;
+  padding:25px;
+  border-radius:12px;
+}
+
+.modal textarea,
+.modal input{
+  width:100%;
+  padding:10px;
+  margin-bottom:15px;
+  border-radius:6px;
+  border:2px solid #8E1913;
+}
+
 /* CONTENT */
 .content{
   max-width:800px;
@@ -138,6 +163,85 @@ nav a.active{
   color:black;
 }
 
+.admin-panel{
+  display:none;
+  position:fixed;
+  right:20px;
+  top:50%;
+  transform:translateY(-50%);
+  flex-direction:column;
+  gap:12px;
+  z-index:999;
+}
+
+.admin-btn{
+  background:#8E1913;
+  color:white;
+  border:none;
+  padding:12px 18px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.admin-btn:hover{
+  background:#D79F90;
+  color:black;
+}
+
+.admin-menu{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+}
+
+.admin-dots{
+  background:#8E1913;
+  color:white;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  cursor:pointer;
+}
+
+#adminMenuPanel{
+  display:none;
+  position:absolute;
+  bottom:55px;
+  right:0;
+  background:white;
+  padding:10px;
+  border-radius:10px;
+}
+
+#adminMenuPanel button{
+  width:130px;
+  background:#8E1913;
+  color:white;
+  border:none;
+  padding:8px;
+  border-radius:6px;
+  margin:5px 0;
+}
+
+.media-box{
+  width:180px;
+  height:200px;
+  background:#8E1913;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.media-box img,
+.media-box video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
 /* FOOTER */
 footer{
   background:#f6f6f6;
@@ -159,43 +263,79 @@ footer{
 <li><a href="urpottery.html">UR Pottery</a></li>
 <li><a href="potterywine.html">Pottery & Wine</a></li>
 <li><a href="coupledn.html">Couples Date Night</a></li>
-<li><a href="potteryspeed.html">Speeddating</a></li>
-<li><a href="products.html">Products</a></li>
+<li><a href="potteryspeed.html" class="active">Speeddating</a></li>
+<li><a href="gallery.html" >Gallery</a></li>
 <li><a href="about.html">About Us</a></li>
 <li><a href="contact.html">Contact Us</a></li>
 </ul>
 </nav>
 
-<!-- HEADING -->
+
 <div class="page-title">Speeddating</div>
-<div class="quote">"words words" by words</div>
+<div class="quote">"Meet. Mingle. Create Connections."</div>
 
-<!-- IMAGES -->
-<div class="top-images">
-  <div class="image-tall"></div>
-  <div class="image-square"></div>
-</div>
+<!-- MEDIA -->
+<div class="top-images" id="speedMedia"></div>
 
-<!-- CONTENT -->
+<!-- TEXT -->
 <div class="content">
-
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor.
-Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.
-</p>
-
-<p>
-In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-Nullam dictum felis eu pede mollis pretium.
-</p>
-
+  <p id="speedParagraph"></p>
 </div>
 
 <!-- JOIN -->
 <div class="join">
-<h3>Want to Join?</h3>
-<button>Register Now</button>
+  <h3>Want to Join?</h3>
+  <button onclick="openSpeedFormLink()">Register Now</button>
 </div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="speedAdminPanel">
+
+<label class="admin-btn">
+Add Image
+<input type="file" hidden accept="image/*" onchange="addSpeedImage(event)">
+</label>
+
+<label class="admin-btn">
+Add Video
+<input type="file" hidden accept="video/*" onchange="addSpeedVideo(event)">
+</label>
+
+<button class="admin-btn" onclick="openParagraphModal()">Edit Paragraph</button>
+<button class="admin-btn" onclick="openFormModal()">Edit Form Link</button>
+
+</div>
+
+<!-- PARAGRAPH MODAL -->
+<div id="paragraphModal" class="modal">
+<div class="modal-content">
+<h3>Edit Paragraph</h3>
+<textarea id="paragraphInput"></textarea>
+<button class="admin-btn" onclick="saveParagraph()">Save</button>
+<button class="admin-btn" onclick="closeParagraphModal()">Close</button>
+</div>
+</div>
+
+<!-- FORM MODAL -->
+<div id="formModal" class="modal">
+<div class="modal-content">
+<h3>Edit Form Link</h3>
+<input id="formInput" placeholder="Paste form link">
+<button class="admin-btn" onclick="saveForm()">Save</button>
+<button class="admin-btn" onclick="closeFormModal()">Close</button>
+</div>
+</div>
+
+<!-- ADMIN MENU -->
+<div class="admin-menu">
+<div class="admin-dots" onclick="toggleAdminMenu()">⋯</div>
+<div id="adminMenuPanel">
+<button onclick="enableAdmin()">Enable Admin</button>
+<button onclick="disableAdmin()">Disable Admin</button>
+</div>
+</div>
+<script src="potteryspeed.js"></script>
+
 
 <footer>
 2026 Inspired Creations • Powered by Purple Web Codes
