@@ -49,7 +49,7 @@ function renderTopMedia(){
         ${
           item.type==="image"
           ? `<img src="${item.src}">`
-          : `<video src="${item.src}" autoplay loop muted></video>`
+          : `<video src="${item.src}" autoplay loop muted playsinline></video>`
         }
         ${isAdmin?`<button class="delete-btn" onclick="deleteTopMedia(${i})">×</button>`:""}
       </div>

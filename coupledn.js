@@ -340,7 +340,7 @@ function renderMedia(){
         ${
           item.type === "image"
           ? `<img src="${item.src}">`
-          : `<video src="${item.src}" autoplay muted loop controls></video>`
+          : `<video src="${item.src}" autoplay loop muted playsinline></video>`
         }
         ${
           isAdmin 

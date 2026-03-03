@@ -20,6 +20,9 @@
 
 body{
   background:#f2f2f2;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
 }
 
 /* NAVBAR */
@@ -70,35 +73,7 @@ nav a.active{
   margin-bottom:30px;
 }
 
-/* TOP IMAGES */
-.top-images{
-  display:flex;
-  justify-content:center;
-  gap:60px;
-  padding:20px;
-}
 
-.image-tall{
-  width:140px;
-  height:220px;
-  background:var(--main);
-  border-radius:12px;
-  transition:0.3s;
-}
-
-.image-square{
-  width:160px;
-  height:160px;
-  background:var(--main);
-  border-radius:12px;
-  transition:0.3s;
-}
-
-.image-tall:hover,
-.image-square:hover{
-  background:var(--hover);
-  transform:scale(1.05);
-}
 
 /* MODAL */
 .modal{
@@ -227,19 +202,33 @@ nav a.active{
   margin:5px 0;
 }
 
-.media-box{
-  width:180px;
-  height:200px;
+
+/* MEDIA GRID */
+.media-grid{
+  max-width:540px;
+  margin:40px auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+/* MEDIA ITEM */
+.media-item{
+  max-width:900px;
+  position:relative;
+  height:220px;
   background:#8E1913;
   border-radius:12px;
   overflow:hidden;
 }
 
-.media-box img,
-.media-box video{
+.media-item img,
+.media-item video{
   width:100%;
   height:100%;
   object-fit:cover;
+    max-width:900px;
+
 }
 
 /* FOOTER */
@@ -248,7 +237,7 @@ footer{
   color:#8E1913;
   text-align:center;
   padding:22px;
-  margin-top:80px;
+  margin-top:auto;   /* MAGIC LINE */
   font-size:14px;
   border-top:1px solid #ddd;
 }
@@ -275,8 +264,7 @@ footer{
 <div class="quote">"Meet. Mingle. Create Connections."</div>
 
 <!-- MEDIA -->
-<div class="top-images" id="speedMedia"></div>
-
+<div class="media-grid" id="speedMedia"></div>
 <!-- TEXT -->
 <div class="content">
   <p id="speedParagraph"></p>
@@ -319,8 +307,15 @@ Add Video
 <!-- FORM MODAL -->
 <div id="formModal" class="modal">
 <div class="modal-content">
-<h3>Edit Form Link</h3>
+<h3>Edit Registration Settings</h3>
+
 <input id="formInput" placeholder="Paste form link">
+
+<label style="display:flex;align-items:center;gap:8px;margin-bottom:15px;">
+  <input type="checkbox" id="registrationToggle">
+  Close Registration (Show as Unavailable)
+</label>
+
 <button class="admin-btn" onclick="saveForm()">Save</button>
 <button class="admin-btn" onclick="closeFormModal()">Close</button>
 </div>

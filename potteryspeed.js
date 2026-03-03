@@ -1,6 +1,8 @@
 const MEDIA_KEY="speedMedia";
 const TEXT_KEY="speedText";
 const FORM_KEY="speedForm";
+const STATUS_KEY="speedRegistrationStatus";
+
 
 let isAdmin=false;
 
@@ -14,19 +16,23 @@ function saveMedia(data){
 }
 
 function renderMedia(){
-  const box=document.getElementById("speedMedia");
-  box.innerHTML="";
-  getMedia().forEach(item=>{
-    box.innerHTML+=`
-    <div class="media-box">
-      ${item.type==="image"
-        ?`<img src="${item.src}">`
-        :`<video src="${item.src}" controls loop muted></video>`
-      }
-    </div>`;
+  const container = document.getElementById("speedMedia");
+  container.innerHTML = "";
+
+  const items = getMedia();
+
+  items.forEach(item=>{
+    container.innerHTML += `
+      <div class="media-item">
+        ${
+          item.type === "image"
+          ? `<img src="${item.src}">`
+          : `<video src="${item.src}" autoplay loop muted playsinline></video>`
+        }
+      </div>
+    `;
   });
 }
-
 function addSpeedImage(e){
   const file=e.target.files[0];
   const reader=new FileReader();
@@ -76,9 +82,14 @@ function saveParagraph(){
 
 /* FORM */
 function openFormModal(){
- document.getElementById("formInput").value=
- localStorage.getItem(FORM_KEY)||"";
- document.getElementById("formModal").style.display="block";
+  document.getElementById("formInput").value=
+    localStorage.getItem(FORM_KEY)||"";
+
+  const status=localStorage.getItem(STATUS_KEY)||"open";
+  document.getElementById("registrationToggle").checked=
+    status==="closed";
+
+  document.getElementById("formModal").style.display="block";
 }
 
 function closeFormModal(){
@@ -86,18 +97,32 @@ function closeFormModal(){
 }
 
 function saveForm(){
- localStorage.setItem(FORM_KEY,
- document.getElementById("formInput").value);
- closeFormModal();
+  const link=document.getElementById("formInput").value;
+  const isClosed=document.getElementById("registrationToggle").checked;
+
+  localStorage.setItem(FORM_KEY, link);
+  localStorage.setItem(STATUS_KEY, isClosed ? "closed" : "open");
+
+  updateRegisterButton();
+  closeFormModal();
 }
 
 function openSpeedFormLink(){
- const link=localStorage.getItem(FORM_KEY);
- if(!link){
-   alert("Form coming soon!");
-   return;
- }
- window.open(link,"_blank");
+  const status=localStorage.getItem(STATUS_KEY)||"open";
+
+  if(status==="closed"){
+    alert("Registration is currently closed.");
+    return;
+  }
+
+  const link=localStorage.getItem(FORM_KEY);
+
+  if(!link){
+    alert("Form coming soon!");
+    return;
+  }
+
+  window.open(link,"_blank");
 }
 
 /* ADMIN */
@@ -116,6 +141,25 @@ function toggleAdminMenu(){
  p.style.display=p.style.display==="block"?"none":"block";
 }
 
-/* INIT */
+
+
+function updateRegisterButton(){
+  const button=document.querySelector(".join button");
+  const status=localStorage.getItem(STATUS_KEY)||"open";
+
+  if(status==="closed"){
+    button.innerText="Unavailable";
+    button.disabled=true;
+    button.style.background="#D79F90";
+    button.style.cursor="not-allowed";
+  }else{
+    button.innerText="Register Now";
+    button.disabled=false;
+    button.style.background="#8E1913";
+    button.style.cursor="pointer";
+  }
+}
+
 renderMedia();
 loadParagraph();
+updateRegisterButton();

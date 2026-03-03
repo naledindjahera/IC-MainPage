@@ -20,6 +20,7 @@
 body{
   background:#f2f2f2;
 }
+
 /* NAVBAR */
 nav{
   background:#f6f6f6;
@@ -44,16 +45,13 @@ nav a{
 
 nav a:hover{
   background:#D79F90;
-  color:#000;
+  color:black;
 }
-
 
 nav a.active{
   color:black;
   text-decoration:underline;
 }
-
-
 
 /* TITLE */
 .title{
@@ -62,7 +60,7 @@ nav a.active{
   font-size:28px;
 }
 
-/* GALLERY ROW */
+/* GALLERY */
 .gallery-item{
   display:flex;
   align-items:center;
@@ -73,25 +71,107 @@ nav a.active{
   margin:auto;
 }
 
-.gallery-item:nth-child(even){
+.gallery-item.reverse{
   flex-direction:row-reverse;
 }
 
 .image-box{
-  width:200px;
-  height:200px;
-  background:var(--main);
+  width:220px;
+  height:220px;
   border-radius:12px;
-  transition:0.3s;
+  overflow:hidden;
+  background:#8E1913;
+  position:relative;
 }
 
-.image-box:hover{
-  background:var(--hover);
-  transform:scale(1.05);
+.image-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 .text-box{
   max-width:400px;
+}
+
+/* DELETE */
+.delete-btn{
+  position:absolute;
+  top:6px;
+  right:6px;
+  background:#8E1913;
+  color:white;
+  border:none;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+/* ADMIN PANEL */
+.admin-panel{
+  display:none;
+  position:fixed;
+  right:20px;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.admin-btn{
+  background:#8E1913;
+  color:white;
+  border:none;
+  padding:12px 18px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.admin-btn:hover{
+  background:#D79F90;
+  color:black;
+}
+
+/* DOT MENU */
+.admin-menu{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+}
+
+.admin-dots{
+  background:#8E1913;
+  color:white;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  cursor:pointer;
+}
+
+#adminMenuPanel{
+  display:none;
+  position:absolute;
+  bottom:55px;
+  right:0;
+  background:white;
+  padding:10px;
+  border-radius:10px;
+}
+
+#adminMenuPanel button{
+  width:130px;
+  background:#8E1913;
+  color:white;
+  border:none;
+  padding:8px;
+  border-radius:6px;
+  margin:5px 0;
 }
 
 /* FOOTER */
@@ -104,14 +184,12 @@ footer{
   font-size:14px;
   border-top:1px solid #ddd;
 }
-
-
 </style>
 </head>
 
 <body>
- <nav>
 
+<nav>
 <ul>
 <li><a href="homepage.html">Home</a></li>
 <li><a href="urpottery.html">UR Pottery</a></li>
@@ -121,39 +199,37 @@ footer{
 <li><a href="gallery.html" class="active">Gallery</a></li>
 <li><a href="about.html">About Us</a></li>
 <li><a href="contact.html">Contact Us</a></li>
-
 </ul>
 </nav>
 
 <h2 class="title">Gallery</h2>
 
-<div class="gallery-item">
-  <div class="image-box"></div>
-  <div class="text-box">
-    <h3>Creative Moments</h3>
-    <p>Guests enjoying their artistic pottery sessions.</p>
-  </div>
+<div id="galleryContainer"></div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="galleryAdminPanel">
+
+<label class="admin-btn">
+Add Gallery Item
+<input type="file" hidden accept="image/*" onchange="addGalleryItem(event)">
+</label>
+
 </div>
 
-<div class="gallery-item">
-  <div class="image-box"></div>
-  <div class="text-box">
-    <h3>Wine & Art Nights</h3>
-    <p>Elegant evenings filled with creativity and laughter.</p>
-  </div>
+<!-- ADMIN MENU -->
+<div class="admin-menu">
+<div class="admin-dots" onclick="toggleAdminMenu()">⋯</div>
+<div id="adminMenuPanel">
+<button onclick="enableGalleryAdmin()">Enable Admin</button>
+<button onclick="disableGalleryAdmin()">Disable Admin</button>
 </div>
-
-<div class="gallery-item">
-  <div class="image-box"></div>
-  <div class="text-box">
-    <h3>Finished Pieces</h3>
-    <p>Beautiful handcrafted pottery creations.</p>
-  </div>
 </div>
 
 <footer>
 2026 Inspired Creations • Powered by Purple Web Codes
 </footer>
+
+<script src="gallery.js"></script>
 
 </body>
 </html>
