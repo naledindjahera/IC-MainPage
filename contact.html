@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact Us | Inspired Creations</title>
-
+<link rel="stylesheet" href="responsive.css">
 <style>
 :root{
   --main:#8E1913;
@@ -148,9 +149,9 @@ footer{
 <li><a href="potterywine.html">Pottery & Wine</a></li>
 <li><a href="coupledn.html">Couples Date Night</a></li>
 <li><a href="potteryspeed.html">Speeddating</a></li>
-<li><a href="gallery.html" class="active">Gallery</a></li>
+<li><a href="gallery.html" >Gallery</a></li>
 <li><a href="about.html">About Us</a></li>
-<li><a href="contact.html">Contact Us</a></li>
+<li><a href="contact.html"class="active">Contact Us</a></li>
 
 </ul>
 </nav>
@@ -159,11 +160,18 @@ footer{
 <div class="container">
 <h2>Contact Us</h2>
 
-<form>
-<input type="text" placeholder="Full Name" required>
-<input type="email" placeholder="Email" required>
-<textarea rows="5" placeholder="Message" required></textarea>
+<form action="https://formspree.io/f/xvgdoakn" method="POST">
+
+<input type="hidden" name="_subject" value="New Contact Message - Inspired Creations">
+
+<input type="text" name="name" placeholder="Full Name" required>
+
+<input type="email" name="email" placeholder="Email" required>
+
+<textarea name="message" rows="5" placeholder="Message" required></textarea>
+
 <button type="submit">Send Message</button>
+
 </form>
 
 <!-- SOCIAL LINKS -->
@@ -178,6 +186,8 @@ footer{
 <footer>
 2026 Inspired Creations • Powered by Purple Web Codes
 </footer>
+
+<script type="module" src="firebase.js"></script>
 
 </body>
 </html>

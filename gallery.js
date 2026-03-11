@@ -1,5 +1,7 @@
 const GALLERY_KEY = "galleryItems";
 let galleryAdmin = false;
+let currentEditIndex = null;
+let newImageData = null;
 
 /* GET DATA */
 function getGalleryItems(){
@@ -19,16 +21,22 @@ function renderGallery(){
   const items = getGalleryItems();
 
   items.forEach((item,index)=>{
+
     container.innerHTML += `
       <div class="gallery-item ${index % 2 ? "reverse" : ""}">
         
         <div class="image-box">
           <img src="${item.image}">
+
           ${
             galleryAdmin
-            ? `<button class="delete-btn" onclick="deleteGalleryItem(${index})">×</button>`
+            ? `
+              <button class="delete-btn" onclick="deleteGalleryItem(${index})">×</button>
+              <button class="edit-btn" onclick="editGalleryText(${index})">✎</button>
+            `
             : ""
           }
+
         </div>
 
         <div class="text-box">
@@ -43,26 +51,24 @@ function renderGallery(){
 
 /* ADD ITEM */
 function addGalleryItem(e){
+
   const file = e.target.files[0];
   if(!file) return;
 
-  const title = prompt("Enter heading:");
-  if(!title) return;
-
-  const text = prompt("Enter description:");
-  if(!text) return;
-
   const reader = new FileReader();
+
   reader.onload = ()=>{
-    const items = getGalleryItems();
-    items.push({
-      image: reader.result,
-      title,
-      text
-    });
-    saveGalleryItems(items);
-    renderGallery();
+
+    newImageData = reader.result;
+    currentEditIndex = null;
+
+    document.getElementById("editTitleInput").value = "";
+    document.getElementById("editTextInput").value = "";
+
+    document.getElementById("editGalleryModal").style.display = "block";
+
   };
+
   reader.readAsDataURL(file);
 }
 
@@ -74,14 +80,31 @@ function deleteGalleryItem(index){
   renderGallery();
 }
 
+
+function editGalleryText(index){
+
+  const items = getGalleryItems();
+
+  currentEditIndex = index;
+
+  document.getElementById("editTitleInput").value =
+    items[index].title;
+
+  document.getElementById("editTextInput").value =
+    items[index].text;
+
+  document.getElementById("editGalleryModal").style.display = "block";
+
+}
+
 /* ADMIN */
-function enableGalleryAdmin(){
+function enableAdmin(){
   galleryAdmin = true;
   document.getElementById("galleryAdminPanel").style.display="flex";
   renderGallery();
 }
 
-function disableGalleryAdmin(){
+function disableAdmin(){
   galleryAdmin = false;
   document.getElementById("galleryAdminPanel").style.display="none";
   renderGallery();
@@ -92,6 +115,56 @@ function toggleAdminMenu(){
   const panel = document.getElementById("adminMenuPanel");
   panel.style.display =
     panel.style.display === "block" ? "none" : "block";
+}
+
+
+function closeGalleryEdit(){
+  document.getElementById("editGalleryModal").style.display = "none";
+}
+
+function saveGalleryEdit(){
+
+  const title = document.getElementById("editTitleInput").value;
+  const text = document.getElementById("editTextInput").value;
+
+  const items = getGalleryItems();
+
+  if(currentEditIndex === null){
+
+    items.push({
+      image: newImageData,
+      title,
+      text
+    });
+
+  }else{
+
+    items[currentEditIndex].title = title;
+    items[currentEditIndex].text = text;
+
+  }
+
+  saveGalleryItems(items);
+
+  renderGallery();
+
+  closeGalleryEdit();
+
+}
+
+function replaceGalleryImage(e){
+
+const file = e.target.files[0];
+if(!file) return;
+
+const reader = new FileReader();
+
+reader.onload = ()=>{
+newImageData = reader.result;
+};
+
+reader.readAsDataURL(file);
+
 }
 
 /* INIT */

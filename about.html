@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About Us | Inspired Creations</title>
 
 <style>
@@ -84,7 +85,7 @@ nav a.active{
 
 /* MEMBER */
 .member{
-  max-width:800px;
+  max-width:600px;
   margin:40px auto;
   display:flex;
   align-items:center;
@@ -96,17 +97,13 @@ nav a.active{
   flex-direction:row;
 }
 
-.photo{
-  width:150px;
-  height:150px;
-  background:var(--main);
-  border-radius:12px;
-  transition:0.3s;
-}
+
 
 .photo:hover{
   background:var(--hover);
 }
+
+
 
 .slideshow{
   width:150px;
@@ -120,6 +117,172 @@ nav a.active{
   border-radius:12px;
 }
 
+/* ADMIN PANEL */
+.admin-panel{
+display:none;
+position:fixed;
+right:20px;
+top:50%;
+transform:translateY(-50%);
+flex-direction:column;
+gap:12px;
+}
+
+.admin-btn{
+background:#8E1913;
+color:white;
+border:none;
+padding:12px 18px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.admin-btn:hover{
+background:#D79F90;
+color:black;
+}
+
+/* DOT MENU */
+.admin-menu{
+position:fixed;
+bottom:20px;
+right:20px;
+}
+
+.admin-dots{
+background:#8E1913;
+color:white;
+width:42px;
+height:42px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+cursor:pointer;
+}
+
+#adminMenuPanel{
+display:none;
+position:absolute;
+bottom:55px;
+right:0;
+background:white;
+padding:10px;
+border-radius:10px;
+}
+
+#adminMenuPanel button{
+  width:130px;
+  background:#8E1913;
+  color:white;
+  border:none;
+  padding:8px;
+  border-radius:6px;
+  margin:5px 0;
+}
+
+/* MEMBER IMAGE */
+.photo img{
+width:200px;
+height:330px;
+object-fit:cover;
+border-radius:12px;
+}
+
+
+.photo video{
+width:250px;
+height:250px;
+object-fit:cover;
+border-radius:12px;
+}
+
+.photo{
+border-radius:12px;
+position:relative;
+overflow:hidden;
+}
+
+
+
+
+/* DELETE BUTTON */
+.delete-btn{
+position:absolute;
+top:6px;
+right:6px;
+background:#8E1913;
+color:white;
+border:none;
+width:24px;
+height:24px;
+border-radius:50%;
+cursor:pointer;
+}
+
+/* EDIT BUTTON */
+.edit-btn{
+position:absolute;
+top:6px;
+left:6px;
+background:#8E1913;
+color:white;
+border:none;
+width:24px;
+height:24px;
+border-radius:50%;
+cursor:pointer;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  z-index:2000;
+}
+
+.modal-content{
+  background:white;
+  width:90%;
+  max-width:500px;
+  margin:100px auto;
+  padding:30px;
+  border-radius:14px;
+}
+
+.modal-content input,
+.modal-content textarea{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:2px solid #8E1913;
+  resize:none;
+  margin-bottom:20px;
+}
+
+.modal-actions{
+margin-top:20px;
+display:flex;
+justify-content:flex-end;
+gap:10px;
+}
+
+.cancel-btn{
+background:#8E1913;
+color:rgb(255, 255, 255);
+}
+
+.member-text{
+max-width:300px;
+line-height:1.5;
+}
+
 /* FOOTER */
 footer{
   background:#f6f6f6;
@@ -131,6 +294,7 @@ footer{
   border-top:1px solid #ddd;
 }
 </style>
+<link rel="stylesheet" href="responsive.css">
 </head>
 
 <body>
@@ -152,53 +316,129 @@ footer{
 <div class="page-title">About Us</div>
 
 <!-- INTRO -->
-<div class="intro">
+<div class="intro" id="aboutIntroText">
 <p>
-In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. 
-Nullam dictum felis eu pede mollis pretium. Integer tincidunt. 
-Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.
+Write about the business here.
 </p>
 </div>
-
 <!-- TEAM -->
 <div class="team-title">The Team</div>
 
-<!-- MEMBER 1 -->
-<div class="member">
-  <div class="photo"></div>
-  <div>
-    <h3>Wilfried</h3>
-    <p>
-    Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
-    </p>
-  </div>
+<div id="teamContainer"></div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="aboutAdminPanel">
+
+<button class="admin-btn" onclick="openIntroEditor()">
+Edit Intro
+</button>
+
+<button class="admin-btn" onclick="openAddMemberModal()">
+Add Team Member
+</button>
+
 </div>
 
-<!-- MEMBER 2 -->
-<div class="member">
-  <div class="slideshow">This is a slide show</div>
-  <div>
-    <h3>Painting Craft Centre work</h3>
-    <p>
-    Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
-    </p>
-  </div>
+<!-- ADMIN MENU -->
+<div class="admin-menu">
+
+<div class="admin-dots" onclick="toggleAdminMenu()">⋯</div>
+
+<div id="adminMenuPanel">
+<button onclick="openAdminLogin()">Enable Admin</button>
+<button onclick="disableAdmin()">Disable Admin</button>
+<button onclick="openChangePassword()">Change Password</button>
 </div>
 
-<!-- MEMBER 3 -->
-<div class="member">
-  <div class="photo"></div>
-  <div>
-    <h3>Sales Lady</h3>
-    <p>
-    Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
-    </p>
-  </div>
+</div>
+
+<!-- INTRO EDIT MODAL -->
+<div id="introModal" class="modal">
+
+<div class="modal-content">
+
+<h3>Edit Intro</h3>
+
+<textarea id="introInput" rows="5"
+placeholder="Write about the business..."></textarea>
+
+<div class="modal-actions">
+<button class="admin-btn" onclick="saveIntro()">Save</button>
+<button class="admin-btn cancel-btn"
+onclick="closeIntroModal()">Cancel</button>
+</div>
+
+</div>
+
+</div>
+
+<!-- TEAM MEMBER MODAL -->
+<div id="teamModal" class="modal">
+
+<div class="modal-content">
+
+<h3>Edit Team Member</h3>
+
+<label>Name</label>
+<input id="memberName">
+
+<label>Description</label>
+<textarea id="memberText" rows="4"></textarea>
+<label>Replace Image / Video</label>
+<input type="file" accept="image/*,video/*" onchange="replaceTeamMedia(event)">
+
+<div class="modal-actions">
+<button class="admin-btn" onclick="saveTeamMember()">Save</button>
+<button class="admin-btn cancel-btn"
+onclick="closeTeamModal()">Cancel</button>
+</div>
+
+</div>
+
+</div>
+
+<div id="adminLoginModal" class="modal">
+<div class="modal-content">
+
+<h3>Admin Login</h3>
+
+<input id="adminUserInput" placeholder="Username">
+
+<input id="adminPassInput" type="password" placeholder="Password">
+
+<button class="admin-btn" onclick="loginAdmin()">Login</button>
+<button class="admin-btn" onclick="closeAdminLogin()">Cancel</button>
+
+</div>
+</div>
+
+<div id="changePasswordModal" class="modal">
+<div class="modal-content">
+
+<h3>Change Password</h3>
+
+<input id="newUsername" placeholder="New Username">
+
+<input id="currentPassword" type="password" placeholder="Current Password">
+
+<input id="newPassword" type="password" placeholder="New Password">
+
+<input id="confirmPassword" type="password" placeholder="Confirm Password">
+
+<button class="admin-btn" onclick="updateAdminCredentials()">Save</button>
+<button class="admin-btn" onclick="closeChangePassword()">Cancel</button>
+
+</div>
 </div>
 
 <footer>
 2026 Inspired Creations • Powered by Purple Web Codes
 </footer>
+
+<script src="about.js"></script>
+<script src="admin.js"></script>
+<script type="module" src="firebase.js"></script>
+
 
 </body>
 </html>

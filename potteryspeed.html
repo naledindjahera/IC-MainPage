@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Speeddating | Inspired Creations</title>
-
+<link rel="stylesheet" href="responsive.css">
 <style>
 :root{
   --main:#8E1913;
@@ -75,29 +76,82 @@ nav a.active{
 
 
 
-/* MODAL */
 .modal{
   display:none;
   position:fixed;
-  inset:0;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
   background:rgba(0,0,0,0.6);
 }
 
+/* MODAL BOX */
 .modal-content{
   background:white;
-  max-width:450px;
-  margin:120px auto;
-  padding:25px;
-  border-radius:12px;
+  width:90%;
+  max-width:500px;
+  margin:100px auto;
+  padding:30px;
+  border-radius:14px;
 }
 
-.modal textarea,
-.modal input{
-  width:100%;
-  padding:10px;
+@keyframes modalFade{
+  from{
+    transform:translateY(-20px);
+    opacity:0;
+  }
+  to{
+    transform:translateY(0);
+    opacity:1;
+  }
+}
+
+/* MODAL TITLE */
+.modal-content h3{
   margin-bottom:15px;
-  border-radius:6px;
+  color:#8E1913;
+}
+
+/* LABELS */
+.modal-content label{
+  font-size:14px;
+  font-weight:600;
+  display:block;
+  margin-top:10px;
+}
+
+/* INPUTS */
+.modal input,
+.modal textarea{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
   border:2px solid #8E1913;
+  resize:none;
+  margin-bottom:20px;
+}
+.modal-content textarea{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:2px solid #8E1913;
+  resize:none;
+  margin-bottom:20px;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus{
+  border-color:#8E1913;
+  outline:none;
+}
+
+/* BUTTON AREA */
+.modal-actions{
+  margin-top:20px;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
 }
 
 /* CONTENT */
@@ -214,10 +268,8 @@ nav a.active{
 
 /* MEDIA ITEM */
 .media-item{
-  max-width:900px;
   position:relative;
   height:220px;
-  background:#8E1913;
   border-radius:12px;
   overflow:hidden;
 }
@@ -229,6 +281,47 @@ nav a.active{
   object-fit:cover;
     max-width:900px;
 
+}
+
+.delete-btn{
+position:absolute;
+top:6px;
+right:6px;
+background:#8E1913;
+color:white;
+border:none;
+width:24px;
+height:24px;
+border-radius:50%;
+cursor:pointer;
+}
+
+.edit-btn{
+position:absolute;
+top:6px;
+left:6px;
+background:#8E1913;
+color:white;
+border:none;
+width:24px;
+height:24px;
+border-radius:50%;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:14px;
+}
+
+.edit-btn,
+.delete-btn{
+opacity:0.85;
+}
+
+.edit-btn:hover,
+.delete-btn:hover{
+opacity:1;
+transform:scale(1.1);
 }
 
 /* FOOTER */
@@ -325,16 +418,55 @@ Add Video
 <div class="admin-menu">
 <div class="admin-dots" onclick="toggleAdminMenu()">⋯</div>
 <div id="adminMenuPanel">
-<button onclick="enableAdmin()">Enable Admin</button>
+<button onclick="openAdminLogin()">Enable Admin</button>
 <button onclick="disableAdmin()">Disable Admin</button>
 </div>
 </div>
+
+
+<div id="adminLoginModal" class="modal">
+<div class="modal-content">
+
+<h3>Admin Login</h3>
+
+<input id="adminUserInput" placeholder="Username">
+<input id="adminPassInput" type="password" placeholder="Password">
+
+<div class="modal-actions">
+<button class="admin-btn" onclick="loginAdmin()">Login</button>
+<button class="admin-btn cancel-btn" onclick="closeAdminLogin()">Cancel</button>
+</div>
+
+</div>
+</div>
+
+<div id="changePasswordModal" class="modal">
+<div class="modal-content">
+
+<h3>Admin Settings</h3>
+
+<input id="newUsername" placeholder="New Username">
+<input id="currentPassword" type="password" placeholder="Current Password">
+<input id="newPassword" type="password" placeholder="New Password">
+<input id="confirmPassword" type="password" placeholder="Confirm Password">
+
+<div class="modal-actions">
+<button class="admin-btn" onclick="updateAdminCredentials()">Save</button>
+<button class="admin-btn cancel-btn" onclick="closeChangePassword()">Cancel</button>
+</div>
+
+</div>
+</div>
+
 <script src="potteryspeed.js"></script>
+<script src="admin.js"></script>
 
 
 <footer>
 2026 Inspired Creations • Powered by Purple Web Codes
 </footer>
+
+<script type="module" src="firebase.js"></script>
 
 </body>
 </html>

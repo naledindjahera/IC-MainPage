@@ -3,17 +3,152 @@ const HOME_MEDIA_KEY = "homeGridMedia";
 const HOME_STORY_KEY = "homeStoryText";
 const HOME_FOUNDER_KEY = "homeFounderText";
 
+/* ===========================
+   ADMIN LOGIN SYSTEM
+=========================== */
+
+const ADMIN_USER_KEY = "adminUsername";
+const ADMIN_PASS_KEY = "adminPassword";
+
+/* default login (first time only) */
+
+if(!localStorage.getItem("adminUsername")){
+  localStorage.setItem("adminUsername","admin");
+}
+
+if(!localStorage.getItem("adminPassword")){
+  localStorage.setItem("adminPassword","purple123");
+}
+
+/* OPEN LOGIN */
+function openAdminLogin(){
+  document.getElementById("adminLoginModal").style.display="block";
+}
+
+/* CLOSE LOGIN */
+function closeAdminLogin(){
+  document.getElementById("adminLoginModal").style.display="none";
+}
+
+/* LOGIN */
+function loginAdmin(){
+
+  const user =
+    document.getElementById("adminUserInput").value;
+
+  const pass =
+    document.getElementById("adminPassInput").value;
+
+  const savedUser =
+    localStorage.getItem("adminUsername");
+
+  const savedPass =
+    localStorage.getItem("adminPassword");
+
+  if(user === savedUser && pass === savedPass){
+
+    closeAdminLogin();
+
+    if(typeof enableAdmin === "function"){
+      enableAdmin();
+    }
+
+  }else{
+
+    alert("Incorrect username or password.");
+
+  }
+
+}
+
+/* OPEN PASSWORD CHANGE */
+function openChangePassword(){
+  document.getElementById("changePasswordModal").style.display="block";
+}
+
+/* CLOSE PASSWORD CHANGE */
+function closeChangePassword(){
+  document.getElementById("changePasswordModal").style.display="none";
+}
+
+/* CHANGE PASSWORD */
+function updateAdminCredentials(){
+
+  const newUser =
+    document.getElementById("newUsername").value.trim();
+
+  const currentPass =
+    document.getElementById("currentPassword").value;
+
+  const newPass =
+    document.getElementById("newPassword").value;
+
+  const confirmPass =
+    document.getElementById("confirmPassword").value;
+
+  const savedPass =
+    localStorage.getItem("adminPassword");
+
+  /* CHECK CURRENT PASSWORD */
+
+  if(currentPass !== savedPass){
+
+    alert("Current password is incorrect.");
+    return;
+
+  }
+
+  /* CHECK NEW PASSWORD MATCH */
+
+  if(newPass !== confirmPass){
+
+    alert("New password and confirm password do not match.");
+    return;
+
+  }
+
+  /* PASSWORD LENGTH */
+
+  if(newPass.length < 4){
+
+    alert("Password must be at least 4 characters.");
+    return;
+
+  }
+
+  /* UPDATE USERNAME */
+
+  if(newUser !== ""){
+
+    localStorage.setItem("adminUsername", newUser);
+
+  }
+
+  /* UPDATE PASSWORD */
+
+  if(newPass !== ""){
+
+    localStorage.setItem("adminPassword", newPass);
+
+  }
+
+  alert("Admin credentials updated successfully.");
+
+  closeChangePassword();
+
+}
+
 /* ADMIN */
 let homeAdmin = false;
 
-function enableHomeAdmin(){
+function enableAdmin(){
   homeAdmin = true;
   document.getElementById("homeAdminPanel").style.display = "flex";
   renderHomeGrid();
   renderBottomGrid();
 }
 
-function disableHomeAdmin(){
+function disableAdmin(){
   homeAdmin = false;
   document.getElementById("homeAdminPanel").style.display = "none";
   renderHomeGrid();
@@ -38,39 +173,103 @@ function renderHomeGrid(){
   items.forEach((item,index)=>{
     container.innerHTML += `
       <div class="home-card" onclick="location.href='${item.link}'">
+
         <img src="${item.src}">
+
         ${
           homeAdmin
-          ? `<button class="delete-home" onclick="event.stopPropagation(); deleteHomeImage(${index})">×</button>`
+          ? `
+          <button class="delete-home"
+            onclick="event.stopPropagation(); deleteHomeImage(${index})">
+            ×
+          </button>
+
+          <label class="edit-home" onclick="event.stopPropagation()">
+            ✎
+            <input type="file" hidden accept="image/*"
+              onchange="replaceHomeImage(event, ${index})">
+          </label>
+          `
           : ""
         }
+
       </div>
     `;
   });
 }
 
-function addHomeImage(event){
-  const file = event.target.files[0];
-  if(!file) return;
 
-  const link = prompt("Enter page link (example: potterywine.html)");
-  if(!link) return;
 
-  const reader = new FileReader();
-  reader.onload = ()=>{
-    const media = getHomeMedia();
-    media.push({src:reader.result, link});
-    saveHomeMedia(media);
-    renderHomeGrid();
-  };
-  reader.readAsDataURL(file);
-}
+
 
 function deleteHomeImage(index){
   const media = getHomeMedia();
   media.splice(index,1);
   saveHomeMedia(media);
   renderHomeGrid();
+}
+
+
+function replaceHomeImage(e,index){
+
+  const file = e.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = ()=>{
+
+    const media = getHomeMedia();
+
+    media[index].src = reader.result;
+
+    saveHomeMedia(media);
+    renderHomeGrid();
+  };
+
+  reader.readAsDataURL(file);
+}
+
+
+function openHomeCardModal(){
+  document.getElementById("homeCardModal").style.display = "block";
+}
+
+function closeHomeCardModal(){
+  document.getElementById("homeCardModal").style.display = "none";
+}
+
+function saveHomeCard(){
+
+  const file =
+    document.getElementById("homeImageFile").files[0];
+
+  const link =
+    document.getElementById("homePageSelect").value;
+
+  if(!file){
+    alert("Please select an image");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = ()=>{
+
+    const media = getHomeMedia();
+
+    media.push({
+      src: reader.result,
+      link: link
+    });
+
+    saveHomeMedia(media);
+    renderHomeGrid();
+    closeHomeCardModal();
+
+  };
+
+  reader.readAsDataURL(file);
 }
 
 /* PARAGRAPHS */
@@ -107,9 +306,6 @@ loadHomeText();
 renderHomeGrid();
 
 
-/* ADMIN STATE */
-let isAdmin = false;
-
 /* TOGGLE DOT MENU */
 function toggleAdminMenu(){
   const panel = document.getElementById("adminMenuPanel");
@@ -117,18 +313,7 @@ function toggleAdminMenu(){
     panel.style.display === "block" ? "none" : "block";
 }
 
-/* ENABLE / DISABLE ADMIN */
-function enableAdmin(){
-  isAdmin = true;
-  document.querySelectorAll(".admin-only")
-    .forEach(el => el.style.display="block");
-}
 
-function disableAdmin(){
-  isAdmin = false;
-  document.querySelectorAll(".admin-only")
-    .forEach(el => el.style.display="none");
-}
 
 
 /* PARAGRAPH STORAGE */
@@ -254,16 +439,30 @@ function renderBottomGrid(){
   container.innerHTML = "";
 
   images.forEach((src,index)=>{
+
     container.innerHTML += `
       <div class="bottom-item">
+
         <img src="${src}">
+
         ${
           homeAdmin
-          ? `<button class="delete-bottom" onclick="deleteBottomImage(${index})">×</button>`
+          ? `
+          <button class="delete-bottom"
+            onclick="deleteBottomImage(${index})">×</button>
+
+          <label class="edit-bottom">
+            ✎
+            <input type="file" hidden accept="image/*"
+              onchange="replaceBottomImage(event, ${index})">
+          </label>
+          `
           : ""
         }
+
       </div>
     `;
+
   });
 }
 
@@ -290,6 +489,25 @@ function deleteBottomImage(index){
   renderBottomGrid();
 }
 
+function replaceBottomImage(e,index){
+
+  const file = e.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = ()=>{
+
+    const images = getBottomImages();
+
+    images[index] = reader.result;
+
+    saveBottomImages(images);
+    renderBottomGrid();
+  };
+
+  reader.readAsDataURL(file);
+}
 /* INIT */
 renderBottomGrid();
 renderHomeGrid();

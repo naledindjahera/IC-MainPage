@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UR Pottery | Inspired Creations</title>
-
+<link rel="stylesheet" href="responsive.css">
 <style>
 :root{
   --main:#8E1913;
@@ -305,6 +306,49 @@ nav a.active{
 }
 
 
+@keyframes modalFade{
+  from{
+    transform:translateY(-20px);
+    opacity:0;
+  }
+  to{
+    transform:translateY(0);
+    opacity:1;
+  }
+}
+/* INPUTS */
+.modal input,
+.modal textarea{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:2px solid #8E1913;
+  resize:none;
+  margin-bottom:20px;
+}
+
+.edit-btn{
+  position:absolute;
+  top:8px;
+  left:8px;
+  background:#8E1913;
+  color:white;
+  border:none;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.edit-btn:hover{
+  background:#D79F90;
+  color:black;
+}
+
 
 /* FOOTER */
 footer{
@@ -388,12 +432,48 @@ footer{
 <div class="admin-menu">
   <div class="admin-dots" onclick="toggleAdminMenu()">⋯</div>
   <div id="adminMenuPanel">
-    <button onclick="enableAdmin()">Enable Admin</button>
+<button onclick="openAdminLogin()">Enable Admin</button>
     <button onclick="disableAdmin()">Disable Admin</button>
   </div>
 </div>
 
+<div id="adminLoginModal" class="modal">
+<div class="modal-content">
+
+<h3>Admin Login</h3>
+
+<input id="adminUserInput" placeholder="Username">
+<input id="adminPassInput" type="password" placeholder="Password">
+
+<div class="modal-actions">
+<button class="admin-btn" onclick="loginAdmin()">Login</button>
+<button class="admin-btn cancel-btn" onclick="closeAdminLogin()">Cancel</button>
+</div>
+
+</div>
+</div>
+
+<div id="changePasswordModal" class="modal">
+<div class="modal-content">
+
+<h3>Admin Settings</h3>
+
+<input id="newUsername" placeholder="New Username">
+<input id="currentPassword" type="password" placeholder="Current Password">
+<input id="newPassword" type="password" placeholder="New Password">
+<input id="confirmPassword" type="password" placeholder="Confirm Password">
+
+<div class="modal-actions">
+<button class="admin-btn" onclick="updateAdminCredentials()">Save</button>
+<button class="admin-btn cancel-btn" onclick="closeChangePassword()">Cancel</button>
+</div>
+
+</div>
+</div>
+
 <script src="urpottery.js"></script>
+<script src="admin.js"></script>
+<script type="module" src="firebase.js"></script>
 <footer>
 2026 Inspired Creations • Powered by Purple Web Codes
 </footer>

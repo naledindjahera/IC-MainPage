@@ -335,23 +335,35 @@ function renderMedia(){
   container.innerHTML = "";
 
   items.forEach((item,index)=>{
+
     container.innerHTML += `
       <div class="media-item ${index === 0 ? "big" : ""}">
+
         ${
           item.type === "image"
           ? `<img src="${item.src}">`
           : `<video src="${item.src}" autoplay loop muted playsinline></video>`
         }
+
         ${
-          isAdmin 
-          ? `<button class="delete-media" onclick="deleteMedia(${index})">×</button>`
+          isAdmin
+          ? `
+          <button class="delete-media" onclick="deleteMedia(${index})">×</button>
+
+          <label class="edit-media">
+            ✎
+            <input type="file" hidden
+              accept="${item.type === "image" ? "image/*" : "video/*"}"
+              onchange="replaceMedia(event, ${index})">
+          </label>
+          `
           : ""
         }
+
       </div>
     `;
   });
 }
-
 
 
 /* IMAGE */
@@ -402,6 +414,29 @@ window.onload = function(){
   renderMedia();
 };
 
+
+function replaceMedia(e,index){
+
+  const file = e.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = ()=>{
+
+    const media = getMedia();
+
+    media[index] = {
+      type: file.type.startsWith("video") ? "video" : "image",
+      src: reader.result
+    };
+
+    saveMedia(media);
+    renderMedia();
+  };
+
+  reader.readAsDataURL(file);
+}
 
 function savePrivateBooking(){
   const link = document.getElementById("privateLink").value;

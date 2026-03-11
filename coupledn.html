@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Couples Date Night | Inspired Creations</title>
-
+<link rel="stylesheet" href="responsive.css">
 <style>
 :root{
   --main:#8E1913;
@@ -214,6 +215,23 @@ nav a.active{
 }
 
 
+.modal-content{
+  background:white;
+  width:90%;
+  max-width:500px;
+  margin:100px auto;
+  padding:30px;
+  border-radius:14px;
+}
+
+.modal-content textarea{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:2px solid #8E1913;
+  resize:none;
+  margin-bottom:20px;
+}
 
 .modal{
   display:none;
@@ -224,16 +242,7 @@ nav a.active{
   height:100%;
   background:rgba(0,0,0,0.6);
 }
-.modal-content{
-  background:white;
-  width:90%;
-  max-width:400px;
-  margin:60px auto;
-  padding:25px;
-  border-radius:10px;
-  max-height:80vh;       /* limits height */
-  overflow-y:auto;      /* enables scrolling */
-}
+
 
 
 .event-edit{
@@ -243,11 +252,16 @@ nav a.active{
   margin-bottom:15px;
 }
 
-.modal input{
+.modal input,
+.modal textarea{
   width:100%;
-  padding:8px;
-  margin-bottom:10px;
+  padding:12px;
+  border-radius:8px;
+  border:2px solid #8E1913;
+  resize:none;
+  margin-bottom:20px;
 }
+
 
 
 .admin-toggle{
@@ -417,7 +431,27 @@ nav a.active{
   color:black;
 }
 
+.edit-media{
+  position:absolute;
+  top:8px;
+  left:8px;
+  background:#8E1913;
+  color:white;
+  border:none;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
+.edit-media:hover{
+  background:#D79F90;
+  color:black;
+}
 
 
 /* FOOTER */
@@ -572,16 +606,53 @@ footer{
   <div class="admin-dots" onclick="toggleAdminMenu()">⋯</div>
 
   <div id="adminMenuPanel">
-    <button onclick="enableAdmin()">Enable Admin</button>
-    <button onclick="disableAdmin()">Disable Admin</button>
+<button onclick="openAdminLogin()">Enable Admin</button>
+<button onclick="disableAdmin()">Disable Admin</button>
   </div>
 
+</div>
+
+
+<div id="adminLoginModal" class="modal">
+<div class="modal-content">
+
+<h3>Admin Login</h3>
+
+<input id="adminUserInput" placeholder="Username">
+
+<input id="adminPassInput" type="password" placeholder="Password">
+
+<div class="modal-actions">
+<button class="admin-btn" onclick="loginAdmin()">Login</button>
+<button class="admin-btn cancel-btn" onclick="closeAdminLogin()">Cancel</button>
+</div>
+</div>
+</div>
+
+<div id="changePasswordModal" class="modal">
+<div class="modal-content">
+
+<h3>Admin Settings</h3>
+
+<input id="newUsername" placeholder="New Username">
+
+<input id="currentPassword" type="password" placeholder="Current Password">
+
+<input id="newPassword" type="password" placeholder="New Password">
+
+<input id="confirmPassword" type="password" placeholder="Confirm Password">
+
+<button class="admin-btn" onclick="updateAdminCredentials()">Save</button>
+<button class="admin-btn" onclick="closeChangePassword()">Cancel</button>
+
+</div>
 </div>
 
 <footer>
 2026 Inspired Creations • Powered by Purple Web Codes
 </footer>
 <script src="coupledn.js"></script>
-
+<script src="admin.js"></script>
+<script type="module" src="firebase.js"></script>
 </body>
 </html>

@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gallery | Inspired Creations</title>
-
+<link rel="stylesheet" href="responsive.css">
 <style>
 :root{
   --main:#8E1913;
@@ -65,7 +66,7 @@ nav a.active{
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:60px;
+  gap:80px;
   padding:60px 20px;
   max-width:1000px;
   margin:auto;
@@ -115,7 +116,7 @@ nav a.active{
   right:20px;
   top:50%;
   transform:translateY(-50%);
-  display:flex;
+  display:none;
   flex-direction:column;
   gap:12px;
 }
@@ -174,6 +175,121 @@ nav a.active{
   margin:5px 0;
 }
 
+.edit-btn{
+  position:absolute;
+  top:6px;
+  left:6px;
+  background:#8E1913;
+  color:white;
+  border:none;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.edit-btn:hover{
+  background:#D79F90;
+  color:black;
+}
+
+/* MODAL BACKGROUND */
+
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+}
+
+/* MODAL BOX */
+.modal-content{
+  background:white;
+  width:90%;
+  max-width:500px;
+  margin:100px auto;
+  padding:30px;
+  border-radius:14px;
+}
+
+@keyframes modalFade{
+  from{
+    transform:translateY(-20px);
+    opacity:0;
+  }
+  to{
+    transform:translateY(0);
+    opacity:1;
+  }
+}
+
+/* MODAL TITLE */
+.modal-content h3{
+  margin-bottom:15px;
+  color:#8E1913;
+}
+
+/* LABELS */
+.modal-content label{
+  font-size:14px;
+  font-weight:600;
+  display:block;
+  margin-top:10px;
+}
+
+/* INPUTS */
+.modal input,
+.modal textarea{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:2px solid #8E1913;
+  resize:none;
+  margin-bottom:20px;
+}
+.modal-content textarea{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:2px solid #8E1913;
+  resize:none;
+  margin-bottom:20px;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus{
+  border-color:#8E1913;
+  outline:none;
+}
+
+/* BUTTON AREA */
+.modal-actions{
+  margin-top:20px;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+}
+
+/* SAVE BUTTON */
+.save-btn{
+  background:#8E1913;
+}
+
+/* CANCEL BUTTON */
+.cancel-btn{
+  background:#8E1913;
+  color:rgb(255, 254, 254);
+}
+
+.cancel-btn:hover{
+  background:#aaa;
+}
+
+
 /* FOOTER */
 footer{
   background:#f6f6f6;
@@ -220,16 +336,80 @@ Add Gallery Item
 <div class="admin-menu">
 <div class="admin-dots" onclick="toggleAdminMenu()">⋯</div>
 <div id="adminMenuPanel">
-<button onclick="enableGalleryAdmin()">Enable Admin</button>
-<button onclick="disableGalleryAdmin()">Disable Admin</button>
+<button onclick="openAdminLogin()">Enable Admin</button>
+<button onclick="disableAdmin()">Disable Admin</button>
 </div>
 </div>
 
+<!-- EDIT GALLERY MODAL -->
+<div id="editGalleryModal" class="modal">
+
+<div class="modal-content">
+
+<h3>Edit Gallery Item</h3>
+
+<label>Upload / Replace Image</label>
+<input type="file" accept="image/*" onchange="replaceGalleryImage(event)">
+
+<label>Heading</label>
+<input id="editTitleInput">
+
+<label>Description</label>
+<textarea id="editTextInput" rows="4"></textarea>
+
+<div class="modal-actions">
+<button class="admin-btn save-btn" onclick="saveGalleryEdit()">Save</button>
+<button class="admin-btn cancel-btn" onclick="closeGalleryEdit()">Cancel</button>
+</div>
+
+</div>
+</div>
+
+
+<div id="adminLoginModal" class="modal">
+<div class="modal-content">
+
+<h3>Admin Login</h3>
+
+<input id="adminUserInput" placeholder="Username">
+
+<input id="adminPassInput" type="password" placeholder="Password">
+
+<div class="modal-actions">
+<button class="admin-btn" onclick="loginAdmin()">Login</button>
+<button class="admin-btn cancel-btn" onclick="closeAdminLogin()">Cancel</button>
+</div>
+
+</div>
+</div>
+
+<div id="changePasswordModal" class="modal">
+<div class="modal-content">
+
+<h3>Admin Settings</h3>
+
+<input id="newUsername" placeholder="New Username">
+
+<input id="currentPassword" type="password" placeholder="Current Password">
+
+<input id="newPassword" type="password" placeholder="New Password">
+
+<input id="confirmPassword" type="password" placeholder="Confirm Password">
+
+<div class="modal-actions">
+<button class="admin-btn" onclick="updateAdminCredentials()">Save</button>
+<button class="admin-btn cancel-btn" onclick="closeChangePassword()">Cancel</button>
+</div>
+
+</div>
+</div>
 <footer>
 2026 Inspired Creations • Powered by Purple Web Codes
 </footer>
 
 <script src="gallery.js"></script>
+<script src="admin.js"></script>
+<script type="module" src="firebase.js"></script>
 
 </body>
 </html>

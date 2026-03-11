@@ -46,16 +46,33 @@ function renderTopMedia(){
   items.forEach((item,i)=>{
     grid.innerHTML+=`
       <div class="media-item ${i===0?"big":""}">
+
         ${
           item.type==="image"
           ? `<img src="${item.src}">`
           : `<video src="${item.src}" autoplay loop muted playsinline></video>`
         }
-        ${isAdmin?`<button class="delete-btn" onclick="deleteTopMedia(${i})">×</button>`:""}
+
+        ${
+          isAdmin
+          ? `
+          <button class="delete-btn" onclick="deleteTopMedia(${i})">×</button>
+
+          <label class="edit-btn">
+            ✎
+            <input type="file" hidden
+              accept="${item.type==="image" ? "image/*" : "video/*"}"
+              onchange="replaceTopMedia(event, ${i})">
+          </label>
+          `
+          : ""
+        }
+
       </div>
     `;
   });
 }
+
 
 function addTopImage(e){
   const file=e.target.files[0];
@@ -90,6 +107,30 @@ function deleteTopMedia(i){
   media.splice(i,1);
   saveTopMedia(media);
   renderTopMedia();
+}
+
+
+function replaceTopMedia(e,index){
+
+  const file = e.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = ()=>{
+
+    const media = getTopMedia();
+
+    media[index] = {
+      type: file.type.startsWith("video") ? "video" : "image",
+      src: reader.result
+    };
+
+    saveTopMedia(media);
+    renderTopMedia();
+  };
+
+  reader.readAsDataURL(file);
 }
 
 /* ---------- STORY ---------- */
@@ -133,12 +174,29 @@ function renderBottomGallery(){
   grid.innerHTML="";
 
   items.slice(0,14).forEach((src,i)=>{
+
     grid.innerHTML+=`
       <div class="media-item">
+
         <img src="${src}">
-        ${isAdmin?`<button class="delete-btn" onclick="deleteBottomImage(${i})">×</button>`:""}
+
+        ${
+          isAdmin
+          ? `
+          <button class="delete-btn" onclick="deleteBottomImage(${i})">×</button>
+
+          <label class="edit-btn">
+            ✎
+            <input type="file" hidden accept="image/*"
+              onchange="replaceBottomImage(event, ${i})">
+          </label>
+          `
+          : ""
+        }
+
       </div>
     `;
+
   });
 }
 
@@ -165,6 +223,26 @@ function deleteBottomImage(i){
   items.splice(i,1);
   saveBottomMedia(items);
   renderBottomGallery();
+}
+
+function replaceBottomImage(e,index){
+
+  const file = e.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = ()=>{
+
+    const items = getBottomMedia();
+
+    items[index] = reader.result;
+
+    saveBottomMedia(items);
+    renderBottomGallery();
+  };
+
+  reader.readAsDataURL(file);
 }
 
 /* INIT */

@@ -21,18 +21,38 @@ function renderMedia(){
 
   const items = getMedia();
 
-  items.forEach(item=>{
+  items.forEach((item,index)=>{
+
     container.innerHTML += `
       <div class="media-item">
+
         ${
           item.type === "image"
           ? `<img src="${item.src}">`
           : `<video src="${item.src}" autoplay loop muted playsinline></video>`
         }
+
+        ${
+          isAdmin
+          ? `
+          <button class="delete-btn" onclick="deleteMedia(${index})">×</button>
+
+          <label class="edit-btn">
+            ✎
+            <input type="file" hidden 
+              accept="${item.type === "image" ? "image/*" : "video/*"}"
+              onchange="replaceMedia(event, ${index})">
+          </label>
+          `
+          : ""
+        }
+
       </div>
     `;
   });
 }
+
+
 function addSpeedImage(e){
   const file=e.target.files[0];
   const reader=new FileReader();
@@ -129,11 +149,13 @@ function openSpeedFormLink(){
 function enableAdmin(){
  isAdmin=true;
  document.getElementById("speedAdminPanel").style.display="flex";
+ renderMedia();
 }
 
 function disableAdmin(){
  isAdmin=false;
  document.getElementById("speedAdminPanel").style.display="none";
+ renderMedia();
 }
 
 function toggleAdminMenu(){
@@ -158,6 +180,40 @@ function updateRegisterButton(){
     button.style.background="#8E1913";
     button.style.cursor="pointer";
   }
+}
+
+
+function deleteMedia(index){
+
+  const media = getMedia();
+
+  media.splice(index,1);
+
+  saveMedia(media);
+  renderMedia();
+}
+
+function replaceMedia(e,index){
+
+  const file = e.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = ()=>{
+
+    const media = getMedia();
+
+    media[index] = {
+      type: file.type.startsWith("video") ? "video" : "image",
+      src: reader.result
+    };
+
+    saveMedia(media);
+    renderMedia();
+  };
+
+  reader.readAsDataURL(file);
 }
 
 renderMedia();

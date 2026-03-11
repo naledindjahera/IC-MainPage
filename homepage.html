@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Inspired Creations</title>
-
+<link rel="stylesheet" href="responsive.css">
 <style>
 :root{
   --main:#8E1913;
@@ -22,8 +23,8 @@
 body{
   background:#f2f2f2;
   color:#333;
+  overflow-x:hidden;
 }
-
 /* NAV */
 nav{
   background:#222;
@@ -60,12 +61,16 @@ nav a.active{
 
 
 /* HERO */
+
 .hero{
   background:white;
   padding:60px 20px;
   text-align:center;
+  width:90%;
+  max-width:900px;
+  margin:40px auto;
+  border-radius:12px;
 }
-
 .hero h1{
   font-style:italic;
   margin-bottom:40px;
@@ -74,8 +79,7 @@ nav a.active{
 /* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  grid-template-columns:1fr 1fr 1fr 1fr;
+  grid-template-columns:repeat(auto-fit, minmax(180px,1fr));
   gap:20px;
   max-width:900px;
   margin:0 auto;
@@ -121,6 +125,8 @@ nav a.active{
   padding:40px;
   margin:40px auto;
   max-width:900px;
+  width:90%;
+  border-radius:12px;
 }
 
 .section h2{
@@ -286,11 +292,9 @@ nav a.active{
 /* BOTTOM GALLERY */
 .bottom-gallery{
   max-width:600px;
-
   margin:30px auto;
   display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(150px,1fr 1fr));
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:repeat(auto-fit, minmax(180px,1fr));
   gap:20px;
 }
 
@@ -369,6 +373,61 @@ nav a.active{
   font-size:14px;
 }
 
+.edit-home,
+.edit-bottom{
+  position:absolute;
+  top:8px;
+  left:8px;
+  background:#8E1913;
+  color:white;
+  border:none;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.edit-home:hover,
+.edit-bottom:hover{
+  background:#D79F90;
+  color:black;
+}
+
+@media (max-width:768px){
+
+.hero{
+  background:white;
+  padding:60px 20px;
+  text-align:center;
+  width:90%;
+  max-width:400px;
+  margin:40px auto;
+  border-radius:12px;
+}
+.section{
+  background:white;
+  padding:40px;
+  margin:40px auto;
+  max-width:900px;
+  width:90%;
+  border-radius:12px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(180px,1fr));
+    grid-template-columns:1fr 1fr 1fr 1fr;
+  gap:20px;
+  max-width:900px;
+  margin:0 auto;
+}
+
+}
+
 /* FOOTER */
 footer{
   background:#f6f6f6;
@@ -389,7 +448,7 @@ footer{
 
 
 <section class="hero">
-<h1> <img src="logo.jpg" alt="Inspired Creations Logo"><br>the home of</h1>
+<h1> <img src="logo1.png" alt="Inspired Creations Logo"><br>the home of</h1>
 
 <div class="grid" id="homeGrid">
   <div class="card" onclick="location.href='urpottery.html'"></div>
@@ -422,10 +481,9 @@ footer{
 
 <div class="admin-panel" id="homeAdminPanel">
 
-  <label class="admin-btn">
-    Add Grid Image
-    <input type="file" accept="image/*" hidden onchange="addHomeImage(event)">
-  </label>
+<button class="admin-btn" onclick="openHomeCardModal()">
+Add Grid Image
+</button>
 
 <button class="admin-btn" onclick="openParagraphModal('story')">Edit Our Story</button>
 <button class="admin-btn" onclick="openParagraphModal('founder')">Edit Founder</button>
@@ -434,6 +492,8 @@ footer{
   Add Bottom Grid
   <input type="file" accept="image/*" hidden onchange="addBottomImage(event)">
 </label>
+
+
 
 </div>
 <!-- EDIT PARAGRAPH MODAL -->
@@ -461,8 +521,9 @@ footer{
   <div class="admin-dots" onclick="toggleAdminMenu()">⋯</div>
 
 <div id="adminMenuPanel">
-  <button onclick="enableHomeAdmin()">Enable Admin</button>
-  <button onclick="disableHomeAdmin()">Disable Admin</button>
+<button onclick="openAdminLogin()">Enable Admin</button>
+<button onclick="disableAdmin()">Disable Admin</button>
+<button onclick="openChangePassword()">Change Password</button>
 </div>
 
 
@@ -488,11 +549,90 @@ footer{
   </div>
 </div>
 
+<div id="homeCardModal" class="modal">
+
+  <div class="modal-content">
+
+    <h3>Add Homepage Card</h3>
+
+    <label>Choose Page</label>
+    <select id="homePageSelect">
+      <option value="urpottery.html">UR Pottery</option>
+      <option value="potterywine.html">Pottery & Wine</option>
+      <option value="coupledn.html">Couples Date Night</option>
+      <option value="potteryspeed.html">Speeddating</option>
+    </select>
+
+    <label>Upload Image</label>
+    <input type="file" id="homeImageFile" accept="image/*">
+
+    <div style="display:flex; gap:10px;">
+      <button class="admin-btn" onclick="saveHomeCard()">Add Card</button>
+      <button class="admin-btn" onclick="closeHomeCardModal()">Cancel</button>
+    </div>
+
+  </div>
+
+</div>
+
+
+<div id="adminLoginModal" class="modal">
+
+  <div class="modal-content">
+
+    <h3>Admin Login</h3>
+
+    <input id="adminUserInput"
+      type="text"
+      placeholder="Username">
+
+    <input id="adminPassInput"
+      type="password"
+      placeholder="Password">
+
+    <div style="display:flex; gap:10px;">
+      <button class="admin-btn" onclick="loginAdmin()">Login</button>
+      <button class="admin-btn" onclick="closeAdminLogin()">Cancel</button>
+    </div>
+
+  </div>
+
+</div>
+
+<div id="changePasswordModal" class="modal">
+
+  <div class="modal-content">
+
+    <h3>Admin Settings</h3>
+
+    <label>Change Username</label>
+    <input id="newUsername" type="text" placeholder="New Username">
+
+    <label>Current Password</label>
+    <input id="currentPassword" type="password" placeholder="Current Password">
+
+    <label>New Password</label>
+    <input id="newPassword" type="password" placeholder="New Password">
+
+    <label>Confirm Password</label>
+    <input id="confirmPassword" type="password" placeholder="Confirm New Password">
+
+    <div style="display:flex; gap:10px;">
+      <button class="admin-btn" onclick="updateAdminCredentials()">Save Changes</button>
+      <button class="admin-btn" onclick="closeChangePassword()">Cancel</button>
+    </div>
+
+  </div>
+
+</div>
+
+
 <footer>
 2026 Inspired Creations • Powered by Purple Web Codes
 </footer>
 
 <script src="home.js"></script>
+<script type="module" src="firebase.js"></script>
 
 </body>
 </html>
