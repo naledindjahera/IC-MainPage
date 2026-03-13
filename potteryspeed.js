@@ -225,6 +225,19 @@ function replaceMedia(e,index){
   reader.readAsDataURL(file);
 }
 
+
+function hideAdminPanel(){
+  const panel = document.getElementById("speedAdminPanel");
+  if(panel) panel.style.display = "none";
+}
+
+function showAdminPanel(){
+  if(isAdmin){
+    const panel = document.getElementById("speedAdminPanel");
+    if(panel) panel.style.display = "flex";
+  }
+}
+
 renderMedia();
 loadParagraph();
 updateRegisterButton();
