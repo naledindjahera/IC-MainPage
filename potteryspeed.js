@@ -102,28 +102,37 @@ function saveParagraph(){
 
 /* FORM */
 function openFormModal(){
-  document.getElementById("formInput").value=
-    localStorage.getItem(FORM_KEY)||"";
 
-  const status=localStorage.getItem(STATUS_KEY)||"open";
-  document.getElementById("registrationToggle").checked=
-    status==="closed";
+  hideAdminPanel();
 
-  document.getElementById("formModal").style.display="block";
+  document.getElementById("formInput").value =
+    localStorage.getItem(FORM_KEY) || "";
+
+  const status = localStorage.getItem(STATUS_KEY) || "open";
+
+  document.getElementById("registrationToggle").checked =
+    status === "closed";
+
+  document.getElementById("formModal").style.display = "block";
 }
 
 function closeFormModal(){
- document.getElementById("formModal").style.display="none";
+
+  document.getElementById("formModal").style.display = "none";
+
+  showAdminPanel();
 }
 
 function saveForm(){
-  const link=document.getElementById("formInput").value;
-  const isClosed=document.getElementById("registrationToggle").checked;
+
+  const link = document.getElementById("formInput").value;
+  const isClosed = document.getElementById("registrationToggle").checked;
 
   localStorage.setItem(FORM_KEY, link);
   localStorage.setItem(STATUS_KEY, isClosed ? "closed" : "open");
 
   updateRegisterButton();
+
   closeFormModal();
 }
 

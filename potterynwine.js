@@ -19,12 +19,16 @@ function openSpeedDatingForm(){
 
 function openEditEvents(){
   document.getElementById("editEventsModal").style.display = "block";
+  document.querySelector(".admin-panel").style.display = "none";
   renderAdminEvents();
 }
 
-
 function closeEditEvents(){
   document.getElementById("editEventsModal").style.display = "none";
+
+  if(isAdmin){
+    document.querySelector(".admin-panel").style.display = "flex";
+  }
 }
 
 const PRIVATE_KEY = "privateBooking";
