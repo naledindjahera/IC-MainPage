@@ -1,7 +1,6 @@
-// FORM LINKS
-const potteryWineForm = "PASTE_YOUR_FORM_LINK_HERE";
-const couplesForm = "PASTE_YOUR_FORM_LINK_HERE";
-const speedDatingForm = "PASTE_YOUR_FORM_LINK_HERE";
+const EVENTS_API = "http://localhost:3000/couples-events"
+const MEDIA_API = "http://localhost:3000/couples-media"
+const PARAGRAPH_API = "http://localhost:3000/couples-paragraph"
 
 // FUNCTIONS
 function openPotteryWineForm(){
@@ -83,21 +82,29 @@ const defaultEvents = [
 ];
 
 
-function getEvents(){
-  const data = localStorage.getItem(STORAGE_KEY);
-  return data ? JSON.parse(data) : defaultEvents;
+async function getEvents(){
+
+ const res = await fetch(EVENTS_API)
+ const data = await res.json()
+
+ return data
+
 }
 
 function saveEvents(events){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
 }
-function renderEvents(){
-  const container = document.getElementById("eventsContainer");
-  container.innerHTML = "";
 
-  const events = getEvents();
 
-  events.forEach((event, index) => {
+
+async function renderEvents(){
+
+ const container = document.getElementById("eventsContainer");
+ container.innerHTML = "";
+
+ const events = await getEvents();
+
+ events.forEach((event,index)=>{
     container.innerHTML += `
       <div class="event">
         <div class="dates">
@@ -158,14 +165,17 @@ renderPrivateEvent();
 
 
 
-function renderAdminEvents(){
-  const container = document.getElementById("adminEventsContainer");
-  const events = getEvents();
+async function renderAdminEvents(){
 
-  container.innerHTML = "";
+ const container = document.getElementById("adminEventsContainer");
 
-  events.forEach((event, index) => {
-    container.innerHTML += `
+ const events = await getEvents();
+
+ container.innerHTML = "";
+
+ events.forEach((event,index)=>{
+
+   container.innerHTML +=  `
       <div class="event-edit">
 
         <p>${event.date}</p>
@@ -211,36 +221,8 @@ function toggleClosed(index){
 }
 
 
-function addEvent(){
-  const date = document.getElementById("newDate").value;
-  const time = document.getElementById("newTime").value;
-  const venue = document.getElementById("newVenue").value;
-  const price = document.getElementById("newPrice").value;
-  const formLink = document.getElementById("newFormLink").value;
 
-  if(!date || !time || !venue || !price || !formLink){
-    alert("Please fill all fields");
-    return;
-  }
 
-  const events = getEvents();
-
-  events.push({
-    date,
-    time,
-    venue,
-    price,
-    formLink,
-    soldOut:false,
-    closed:false
-  });
-
-  saveEvents(events);
-  renderEvents();
-  renderAdminEvents();
-
-  alert("Event added!");
-}
 
 
 function deleteEvent(index){
@@ -276,20 +258,37 @@ function disableAdmin(){
 // PARAGRAPH STORAGE
 const PARAGRAPH_KEY = "couplesParagraph";
 
-function loadParagraph(){
-  const saved = localStorage.getItem(PARAGRAPH_KEY);
-  const text = saved || "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-  document.getElementById("storyParagraph").innerText = text;
+async function loadParagraph(){
+
+ const res = await fetch(PARAGRAPH_API)
+ const data = await res.json()
+
+ if(data && data.text){
+  document.getElementById("storyParagraph").innerText = data.text
+ }
+
 }
 
-function saveParagraph(){
-  const newText = document.getElementById("paragraphInput").value;
+async function saveParagraphModal(){
 
-  if(!newText) return;
+ const text = document.getElementById("paragraphTextarea").value
 
-  localStorage.setItem(PARAGRAPH_KEY, newText);
-  loadParagraph();
-  alert("Paragraph updated!");
+ if(!text.trim()){
+  alert("Paragraph cannot be empty")
+  return
+ }
+
+ await fetch(PARAGRAPH_API,{
+  method:"POST",
+  headers:{
+   "Content-Type":"application/json"
+  },
+  body:JSON.stringify({text})
+ })
+
+ loadParagraph()
+ closeParagraphModal()
+
 }
 
 function openParagraphEditor(){
@@ -302,19 +301,6 @@ function closeParagraphModal(){
   document.getElementById("paragraphModal").style.display = "none";
 }
 
-function saveParagraphModal(){
-  const text = document.getElementById("paragraphTextarea").value;
-
-  if(!text.trim()){
-    alert("Paragraph cannot be empty");
-    return;
-  }
-
-  localStorage.setItem(PARAGRAPH_KEY, text);
-  loadParagraph();
-  closeParagraphModal();
-}
-
 
 
 loadParagraph();
@@ -323,20 +309,24 @@ loadParagraph();
 
 const MEDIA_KEY = "couplesMedia";
 
-function getMedia(){
-  const data = localStorage.getItem(MEDIA_KEY);
-  return data ? JSON.parse(data) : [];
+async function getMedia(){
+
+ const res = await fetch(MEDIA_API)
+ const data = await res.json()
+
+ return data
+
 }
 
 function saveMedia(items){
   localStorage.setItem(MEDIA_KEY, JSON.stringify(items));
 }
 
-function renderMedia(){
+async function renderMedia(){
   const container = document.getElementById("mediaGrid");
   if(!container) return;
 
-  const items = getMedia();
+const items = await getMedia();
   container.innerHTML = "";
 
   items.forEach((item,index)=>{
@@ -372,28 +362,25 @@ function renderMedia(){
 
 
 /* IMAGE */
-function addImage(){
-  const file = document.getElementById("imageFile").files[0];
-  if(!file) return;
-
-  const reader = new FileReader();
-  reader.onload = () => {
-    const media = getMedia();
-    media.push({type:"image", src:reader.result});
-    saveMedia(media);
-    renderMedia();
-  };
-  reader.readAsDataURL(file);
-}
+await fetch(MEDIA_API,{
+ method:"POST",
+ headers:{
+  "Content-Type":"application/json"
+ },
+ body:JSON.stringify({
+  type:"image",
+  src:reader.result
+ })
+})
 
 /* VIDEO */
-function addVideo(){
+async function addVideo(){
   const file = document.getElementById("videoFile").files[0];
   if(!file) return;
 
   const reader = new FileReader();
   reader.onload = () => {
-    const media = getMedia();
+   const media = await getMedia();
     media.push({type:"video", src:reader.result});
     saveMedia(media);
     renderMedia();

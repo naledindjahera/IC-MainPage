@@ -105,7 +105,7 @@ font-size:32px;
 
 <h1>Page Under Construction</h1>
 
-<p>
+<p id="constructionText">
 We're currently working on something exciting for Inspired Creations.
 This page will be available soon.
 </p>
@@ -113,6 +113,31 @@ This page will be available soon.
 <a href="index.html">Back to Home</a>
 
 </div>
+
+<script>
+const API = "http://localhost:3000/construction";
+
+async function loadMessage(){
+
+ try{
+
+  const res = await fetch(API);
+  const data = await res.json();
+
+  if(data && data.text){
+   document.getElementById("constructionText").innerText = data.text;
+  }
+
+ }catch(err){
+
+  console.log("Server not connected yet");
+
+ }
+
+}
+
+loadMessage();
+</script>
 
 </body>
 </html>

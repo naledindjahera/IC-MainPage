@@ -27,34 +27,31 @@ function closeAdminLogin(){
 /* LOGIN */
 function loginAdmin(){
 
-  const user =
-    document.getElementById("adminUserInput").value;
+  const user = document.getElementById("adminUserInput").value;
+  const pass = document.getElementById("adminPassInput").value;
 
-  const pass =
-    document.getElementById("adminPassInput").value;
+  const savedUser = localStorage.getItem(ADMIN_USER_KEY);
+  const savedPass = localStorage.getItem(ADMIN_PASS_KEY);
+  document.getElementById("adminMenuPanel").style.display = "none";
 
-  const savedUser =
-    localStorage.getItem(ADMIN_USER_KEY);
-
-  const savedPass =
-    localStorage.getItem(ADMIN_PASS_KEY);
+  console.log("Trying login:", user, pass);
 
   if(user === savedUser && pass === savedPass){
+
+    alert("Login successful ✅");
 
     closeAdminLogin();
 
     if(typeof enableAdmin === "function"){
       enableAdmin();
+    } else {
+      console.error("enableAdmin not found ❌");
     }
 
   }else{
-
     alert("Incorrect username or password");
-
   }
-
 }
-
 /* PASSWORD CHANGE */
 
 function openChangePassword(){

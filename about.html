@@ -342,18 +342,7 @@ Add Team Member
 
 </div>
 
-<!-- ADMIN MENU -->
-<div class="admin-menu">
 
-<div class="admin-dots" onclick="toggleAdminMenu()">⋯</div>
-
-<div id="adminMenuPanel">
-<button onclick="openAdminLogin()">Enable Admin</button>
-<button onclick="disableAdmin()">Disable Admin</button>
-<button onclick="openChangePassword()">Change Password</button>
-</div>
-
-</div>
 
 <!-- INTRO EDIT MODAL -->
 <div id="introModal" class="modal">
@@ -388,7 +377,7 @@ onclick="closeIntroModal()">Cancel</button>
 <label>Description</label>
 <textarea id="memberText" rows="4"></textarea>
 <label>Replace Image / Video</label>
-<input type="file" accept="image/*,video/*" onchange="replaceTeamMedia(event)">
+<input type="file" accept="image/*,video/*" onchange="selectMedia(event)">
 
 <div class="modal-actions">
 <button class="admin-btn" onclick="saveTeamMember()">Save</button>
@@ -400,8 +389,23 @@ onclick="closeTeamModal()">Cancel</button>
 
 </div>
 
+<!-- ADMIN MENU -->
+<div class="admin-menu">
+
+<div class="admin-dots" onclick="toggleAdminMenu()">⋯</div>
+
+<div id="adminMenuPanel">
+<button onclick="openAdminLogin()">Enable Admin</button>
+<button onclick="disableAdmin()">Disable Admin</button>
+<button onclick="openChangePassword()">Change Password</button>
+</div>
+
+</div>
+
 <div id="adminLoginModal" class="modal">
 <div class="modal-content">
+
+  
 
 <h3>Admin Login</h3>
 
@@ -440,7 +444,8 @@ onclick="closeTeamModal()">Cancel</button>
 
 <script src="about.js"></script>
 <script src="admin.js"></script>
-<script type="module" src="firebase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
 
 
 </body>
