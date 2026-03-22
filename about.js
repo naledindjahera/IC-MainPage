@@ -3,12 +3,24 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 console.log("about.js loaded");
 
-let supabase = null;
-if (window.supabase) {
-  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-} else {
-  console.error("Supabase library not loaded. Admin features may not work.");
-}
+
+window.addEventListener("load", async () => {
+
+  supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  console.log("Supabase connected ✅");
+
+  if(localStorage.getItem("isAdmin") === "true"){
+    enableAdmin();
+  }
+
+  await renderTeam();
+  await loadIntro();
+
+});
 
 let aboutAdmin = false;
 let currentMemberIndex = null;
@@ -16,19 +28,19 @@ let newMemberMedia = null;
 
 
 /* GET TEAM DATA */
-async function getTeam(){
-  if (!supabase) return [];
-  const { data, error } = await supabase.from("team").select("*");
-  if(error){ console.error(error); return []; }
-  return data;
+async function getTeam(client) {
+  const { data, error } = await client.from("team").select("*");
+  console.log("getTeam result:", { data, error });
+  return error ? [] : data;
 }
 
 
 /* RENDER TEAM */
-async function renderTeam(){
+async function renderTeam(client) {
   const container = document.getElementById("teamContainer");
   container.innerHTML = "";
-  const members = await getTeam();
+  const members = await getTeam(client);
+
 
   members.forEach((member, index) => {
     container.innerHTML += `
@@ -210,6 +222,7 @@ function openAddMemberModal(){
 async function loadIntro(){
   if (!supabase) return;
   const { data, error } = await supabase.from("about").select("*").single();
+  console.log("loadIntro result:", { data, error });
   if(data){
     document.getElementById("aboutIntroText").innerHTML = `<p>${data.text}</p>`;
   }
@@ -243,11 +256,3 @@ function closeIntroModal(){
 
 
 
-/* INIT */
-(async () => {
-  if(localStorage.getItem("isAdmin") === "true"){
-    enableAdmin();
-  }
-  await renderTeam();
-  await loadIntro();
-})();
