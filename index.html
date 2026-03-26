@@ -479,56 +479,8 @@ footer{
   <div class="bottom-gallery" id="homeBottomGallery"></div>
 </section>
 
-<div class="admin-panel" id="homeAdminPanel">
-
-<button class="admin-btn" onclick="openHomeCardModal()">
-Add Grid Image
-</button>
-
-<button class="admin-btn" onclick="openParagraphModal('story')">Edit Our Story</button>
-<button class="admin-btn" onclick="openParagraphModal('founder')">Edit Founder</button>
-
-<label class="admin-btn">
-  Add Bottom Grid
-  <input type="file" accept="image/*" hidden onchange="addBottomImage(event)">
-</label>
-
-
-
-</div>
 <!-- EDIT PARAGRAPH MODAL -->
-<div id="paragraphModal" class="modal">
-
-  <div class="modal-content">
-
-    <h3>Edit Paragraph</h3>
-
-    <textarea id="paragraphTextarea"
-      rows="6"
-      placeholder="Type your paragraph here..."></textarea>
-
-    <button class="admin-btn" onclick="saveParagraphModal()">Save</button>
-    <button class="admin-btn" onclick="closeParagraphModal()">Close</button>
-
-  </div>
-
-</div>
-
-
 <!-- ADMIN MINI MENU -->
-<div class="admin-menu">
-
-  <div class="admin-dots" onclick="toggleAdminMenu()">⋯</div>
-
-<div id="adminMenuPanel">
-<button onclick="openAdminLogin()">Enable Admin</button>
-<button onclick="disableAdmin()">Disable Admin</button>
-<button onclick="openChangePassword()">Change Password</button>
-</div>
-
-
-</div>
-
 <!-- PARAGRAPH MODAL -->
 <div id="speedParagraphModal" class="modal">
   <div class="modal-content">
@@ -549,90 +501,12 @@ Add Grid Image
   </div>
 </div>
 
-<div id="homeCardModal" class="modal">
-
-  <div class="modal-content">
-
-    <h3>Add Homepage Card</h3>
-
-    <label>Choose Page</label>
-    <select id="homePageSelect">
-      <option value="urpottery.html">UR Pottery</option>
-      <option value="potterywine.html">Pottery & Wine</option>
-      <option value="coupledn.html">Couples Date Night</option>
-      <option value="potteryspeed.html">Speeddating</option>
-    </select>
-
-    <label>Upload Image</label>
-    <input type="file" id="homeImageFile" accept="image/*">
-
-    <div style="display:flex; gap:10px;">
-      <button class="admin-btn" onclick="saveHomeCard()">Add Card</button>
-      <button class="admin-btn" onclick="closeHomeCardModal()">Cancel</button>
-    </div>
-
-  </div>
-
-</div>
-
-
-<div id="adminLoginModal" class="modal">
-
-  <div class="modal-content">
-
-    <h3>Admin Login</h3>
-
-    <input id="adminUserInput"
-      type="text"
-      placeholder="Username">
-
-    <input id="adminPassInput"
-      type="password"
-      placeholder="Password">
-
-    <div style="display:flex; gap:10px;">
-      <button class="admin-btn" onclick="loginAdmin()">Login</button>
-      <button class="admin-btn" onclick="closeAdminLogin()">Cancel</button>
-    </div>
-
-  </div>
-
-</div>
-
-<div id="changePasswordModal" class="modal">
-
-  <div class="modal-content">
-
-    <h3>Admin Settings</h3>
-
-    <label>Change Username</label>
-    <input id="newUsername" type="text" placeholder="New Username">
-
-    <label>Current Password</label>
-    <input id="currentPassword" type="password" placeholder="Current Password">
-
-    <label>New Password</label>
-    <input id="newPassword" type="password" placeholder="New Password">
-
-    <label>Confirm Password</label>
-    <input id="confirmPassword" type="password" placeholder="Confirm New Password">
-
-    <div style="display:flex; gap:10px;">
-      <button class="admin-btn" onclick="updateAdminCredentials()">Save Changes</button>
-      <button class="admin-btn" onclick="closeChangePassword()">Cancel</button>
-    </div>
-
-  </div>
-
-</div>
-
 
 <footer>
 2026 Inspired Creations • Powered by Purple Web Codes
 </footer>
 
 <script src="home.js"></script>
-<script type="module" src="firebase.js"></script>
 
 </body>
 </html>
